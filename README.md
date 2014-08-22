@@ -1,6 +1,6 @@
 # README #
 
-This section will come, right now it's just a game being developed in python, that requires a Serial connection to an RFID Reader (which right now is a RFID Shield for Arduino)
+This section will come, right now it's just a game being developed in python, that requires a Serial connection to a RFID Reader (which right now is a RFID Shield for Arduino)
 
 ### ReaFID - A reaction game with RFID ###
 
