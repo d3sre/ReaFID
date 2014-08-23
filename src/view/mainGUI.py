@@ -7,34 +7,48 @@ import tkinter as tk
 class MainGui(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
-        self.grid()
-        self.createWidgets()
+ #      self.grid()
+        self.topMenuBar()     
+
+        try:
+            self.master.config(menu=self.menubar)
+        except AttributeError:
+            self.master.tk.call(master, "config", "-menu", self.menubar)
+       
+#        self.Label(master, text="Color")  
+        self.canvas = tk.Canvas(self, bg="white", width=400, height=400, bd=0, highlightthickness=0)
+        self.gameRectangle()
+        self.canvas.pack() 
+
+   
+
+    def topMenuBar(self):
+        self.menubar = tk.Menu(self)
+        menu = tk.Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label="File", menu=menu)
+        menu.add_command(label="Configure Cards")
+        menu.add_command(label="Select Game Mode")
         
-    def createWidgets(self):
-        self.quitButton = tk.Button(self, text="Quit", command=self.quit)
-        self.quitButton.grid()
+        menu = tk.Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label="Topscore", menu=menu)
+        menu.add_command(label="Show Topscore")
         
-    def menu(self):
-        self.subMenu = tk.Menu(self.menuRoot)
-        self.menuRoot.add_cascade(label="Menu", menu=self.subMenu)
-        self.subMenu.add_command(label="Card Configurationq", command=self.__aboutHandler)
+        menu = tk.Menu(self.menubar, tearoff=0)
+        self.menubar.add_cascade(label="About", menu=menu)
         
-    def topscore(self):
-        print "topscore"
+
+    def gameRectangle(self):
+        self.gameColor = "blue"
+        self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
+#    def downStatusBar(self):
+            
         
-    def about(self):
-        print "about"       
         
-    def menuRoot(self):
-        menubar = tk.Menu() 
-        menubar.add_command(label="Menu", command=self.menu())
-        menubar.add_command(label="Topscore", command=self.topscore())
-        menubar.add_command(label="About", command=self.about())  
-        
-         
+root = tk.Tk()  
         
 app = MainGui()
+app.pack()
 app.master.title("ReaFID")
-app.mainloop()
+root.mainloop()
 
 
