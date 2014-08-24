@@ -74,5 +74,5 @@ def testSaveConfig():
     
 
 #testSaveConfig()
-#registerCard()
-testLoadConfig()
+registerCard()
+#testLoadConfig()

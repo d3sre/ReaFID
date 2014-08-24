@@ -1,7 +1,9 @@
 #! /usr/bin/python
 
-
+import sys
+sys.path.append('/home/des/git/RFIDuino/src/model/')
 import tkinter as tk
+import gameLogics
 
 
 class MainGui(tk.Frame):
@@ -35,6 +37,11 @@ class MainGui(tk.Frame):
         
         menu = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label="About", menu=menu)
+        
+        menu = tk.Menu(self.menubar, tearoff=0)
+        self.menubar.add_separator()
+        self.menubar.add_cascade(label="State")
+        
         
 
     def gameRectangle(self):

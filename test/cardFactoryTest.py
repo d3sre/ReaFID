@@ -27,6 +27,8 @@ class TestCardCreation(unittest.TestCase):
     def test_createStudentCard(self):
         self.assertEqual(self.card2.getName(), "sachedes")
         self.assertEqual(self.card2.getID(), "StudentIDTest")
+        
+     
   
 
 if __name__ == '__main__':

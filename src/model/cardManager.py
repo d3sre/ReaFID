@@ -31,11 +31,15 @@ class CardManager(metaclass=Singleton):
                 else : print("Unknown card type")
         else : print("No cards found")
   
-    def getCard(self, id):
+    def getCard(self, uid):
         for card in self.activeCards:
-            if card.getID() == id:
+            if card.getID() == uid:
                 print("Found card: ", card.getID())
                 return card
+            
+    def getCardByNumber(self, number):
+        return self.activeCards[number]
+             
             
     def removeCard(self, card):
         self.activeCards.remove(card)
@@ -49,3 +53,8 @@ class CardManager(metaclass=Singleton):
         with open('data.pickle', 'rb') as f:
             self.activeCards = pickle.load(f)
 
+    def getSizeCardArray(self):
+        return len(self.activeCards)
+    
+    def getEmptyManager(self, list):
+        return self.activeCards.clear()
