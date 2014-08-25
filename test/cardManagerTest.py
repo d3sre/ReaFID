@@ -4,7 +4,7 @@
 import unittest
 import sys
 
-sys.path.append('/home/des/git/RFIDuino/src/model/')
+sys.path.append('/home/des/git/ReaFID/src/model/')
 import cardManager
 import cardFactory
 import rFIDReader

@@ -5,7 +5,8 @@ class RFIDReaderClass:
     def __init__(self):
         import serial
         self.__serialUid = ""
-        self.__srl = serial.Serial('/dev/ttyACM0', 115200, timeout=1)
+        self.serialInterface = '/dev/ttyACM0'
+        self.__srl = serial.Serial(self.serialInterface, 115200, timeout=1)
 #        print(self.__srl.readline())
 
     def readUID(self, uid):
@@ -25,3 +26,10 @@ class RFIDReaderClass:
 #                print(self.__uid.strip()) 
         self.__srl.close()
         return self.__uid.strip()
+    
+    def getSerial(self):
+        return self.serialInterface
+    
+    def saveSerial(self, serial):
+        self.serialInterface = serial
+        

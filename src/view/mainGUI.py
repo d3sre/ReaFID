@@ -1,15 +1,16 @@
 #! /usr/bin/python
 
 import sys
-sys.path.append('/home/des/git/RFIDuino/src/model/')
+sys.path.append('/home/des/git/ReaFID/src/model/')
 import tkinter as tk
 import gameLogics
+import cardManager
+import subGUIs
 
 
 class MainGui(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
- #      self.grid()
         self.topMenuBar()     
 
         try:
@@ -28,8 +29,10 @@ class MainGui(tk.Frame):
         self.menubar = tk.Menu(self)
         menu = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label="File", menu=menu)
-        menu.add_command(label="Configure Cards")
+#        menu.add_command(label="Configure Cards", command=self.configCardsWindow)
+        menu.add_command(label="Configure Cards", command=self.showConfigCardsDialog)
         menu.add_command(label="Select Game Mode")
+        menu.add_command(label="Configure Console Connection", command=self.configSerialConnection)
         
         menu = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label="Topscore", menu=menu)
@@ -47,15 +50,46 @@ class MainGui(tk.Frame):
     def gameRectangle(self):
         self.gameColor = "blue"
         self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
+        
+        
+    def showConfigCardsDialog(self):
+        d = subGUIs.CardConfigDialog(self)
+        self.wait_window(d.top)
+        
+#         myConfigDialog = subGUIs.ConfigCardsDialog(self)
+#         myConfigDialog.show()
+        #myConfigGUI.configGUI(self)
+        
+    def configSerialConnection(self):
+        subGUIs.ConfigCardsGui.configSerialConnection(self)    
+
+        
+        
+    def listConfiguredCards(self):
+#        textbox = tk.Listbox(self)
+#        textbox.pack(fill="both")
+        
+        self.activeCards = (cardManager.CardManager.getSizeCardArray(self)- 1)
+        card = 0
+        while (card <= self.activeCards):
+            currentCard = cardManager.CardManager.getCardByNumber(self, card)
+            tk.Text()
+            tk.INSERT(0, currentCard.getID())
+            card += 1
+
+        
+        
+#         self.middleLabel = tk.Label(self.t, text="middlelabel")   
+#         return self.middleLabel  
 #    def downStatusBar(self):
             
         
         
-root = tk.Tk()  
-        
-app = MainGui()
-app.pack()
-app.master.title("ReaFID")
-root.mainloop()
+# root = tk.Tk()  
+#          
+# app = MainGui()
+# app.pack()
+# app.master.title("ReaFID")
+# root.mainloop()
 
 

@@ -4,7 +4,7 @@
 import unittest
 import sys
 
-sys.path.append('/home/des/git/RFIDuino/src/model/')
+sys.path.append('/home/des/git/ReaFID/src/model/')
 import cardManager
 import cardFactory
 import gameLogics
@@ -37,8 +37,9 @@ class TestManagerCreation(unittest.TestCase):
     def test_checkRandomValue(self):        
         self.assertEqual(self.myCardManager.getSizeCardArray(), 3)
         self.size = self.myCardManager.getSizeCardArray()
+        print ("-1- size: " ,self.size)
         self.assertLessEqual(gameLogics.GameLogic().getRandomNumber(), self.size)
-        print ("random: " ,gameLogics.GameLogic().getRandomNumber())
+        print ("-2- random: " ,gameLogics.GameLogic().getRandomNumber())
 
 
     def test_getRandomColor(self):
