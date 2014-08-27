@@ -1,6 +1,7 @@
 #! /usr/bin/python
 
-class RFIDReaderClass:
+import singleton
+class RFIDReaderClass(metaclass=singleton.Singleton):
 
     def __init__(self):
         import serial
@@ -9,7 +10,16 @@ class RFIDReaderClass:
         self.__srl = serial.Serial(self.serialInterface, 115200, timeout=1)
 #        print(self.__srl.readline())
 
-    def readUID(self, uid):
+    def setSerialInterface(self, serial):
+        self.serialInterface = serial
+        print("New Serial connection is: ", self.serialInterface )
+        
+    def getSerialInterface(self):
+        print("Active Serial connection is: ", self.serialInterface ) 
+        return self.serialInterface   
+
+
+    def readUID(self):
         print("ok")
         i = 0
         self.__uid = uid
@@ -27,9 +37,5 @@ class RFIDReaderClass:
         self.__srl.close()
         return self.__uid.strip()
     
-    def getSerial(self):
-        return self.serialInterface
-    
-    def saveSerial(self, serial):
-        self.serialInterface = serial
+
         

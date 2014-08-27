@@ -13,7 +13,7 @@ class timeMeasureClass:
         self.tstart = datetime.datetime.now()
 #        return self.t
         
-    def getTime(self, elapsedTime):
+    def getTime(self):
         print("3")
         self.tstop = datetime.datetime.now()
         self.elapsed_time = self.tstop - self.tstart

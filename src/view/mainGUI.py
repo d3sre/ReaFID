@@ -20,8 +20,11 @@ class MainGui(tk.Frame):
        
 #        self.Label(master, text="Color")  
         self.canvas = tk.Canvas(self, bg="white", width=400, height=400, bd=0, highlightthickness=0)
-        self.gameRectangle()
+        self.gameColor = "blue"
+        self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
         self.canvas.pack() 
+        self.descriptionLabel = tk.Label(self.canvas, text="Color", anchor="center",width=400, height=400, background=self.gameColor)
+        self.descriptionLabel.pack()
 
    
 
@@ -45,12 +48,7 @@ class MainGui(tk.Frame):
         self.menubar.add_separator()
         self.menubar.add_cascade(label="State")
         
-        
-
-    def gameRectangle(self):
-        self.gameColor = "blue"
-        self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
-        
+              
         
     def showConfigCardsDialog(self):
         d = subGUIs.CardConfigDialog(self)
@@ -65,32 +63,3 @@ class MainGui(tk.Frame):
         self.wait_window(d.top)  
 
         
-        
-    def listConfiguredCards(self):
-#        textbox = tk.Listbox(self)
-#        textbox.pack(fill="both")
-        
-        self.activeCards = (cardManager.CardManager.getSizeCardArray(self)- 1)
-        card = 0
-        while (card <= self.activeCards):
-            currentCard = cardManager.CardManager.getCardByNumber(self, card)
-            tk.Text()
-            tk.INSERT(0, currentCard.getID())
-            card += 1
-
-        
-        
-#         self.middleLabel = tk.Label(self.t, text="middlelabel")   
-#         return self.middleLabel  
-#    def downStatusBar(self):
-            
-        
-        
-# root = tk.Tk()  
-#          
-# app = MainGui()
-# app.pack()
-# app.master.title("ReaFID")
-# root.mainloop()
-
-

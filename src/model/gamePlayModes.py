@@ -8,6 +8,9 @@ Created on Aug 24, 2014
 # import random
 # import cardManager
 # import cardFactory
+import gameLogics
+import timeMeasure
+import rFIDReader
 
 import singleton
 # Error can be ignored
@@ -30,6 +33,9 @@ class GamePlayStrategy(metaclass=singleton.Singleton):
     def setGamePlayMode(self, newMode):
         self.activeGamePlayStrategy = newMode  
         print("Mode has been set to: ", self.activeGamePlayStrategy)  
+        
+        
+        
     
   
   
@@ -42,10 +48,25 @@ class GameStrategyEasy(GamePlayStrategy):
         '''
         Constructor
         '''
+        self.myTimeMeasure = timeMeasure.timeMeasureClass()
+        self.myRFIDReaderConnection = rFIDReader.RFIDReaderClass()
+        self.numberOfRounds = 10
+        
         self.gameStrategyEasy()
         
-        def gameStrategyEasy():
-            print ("Started Easy Mode")
+    def gameStrategyEasy(self):
+        print ("Started Easy Mode")
+        self.activeDescription = gameLogics.GameLogic.getRandomDescription(self)
+        self.activeColorParsing = self.activeDescription.islower()
+        
+        ### game round
+        startTime = self.myTimeMeasure.startTimer()
+        print("Start Counter at ", startTime)
+        readUid = self.myRFIDReaderConnection.readUID()
+        print("Read UID is ", readUid() )
+        endTime = self.myTimeMeasure.getTime()
+        print("End Counter at ", endTime)
+        ###
             
             
             
@@ -60,6 +81,6 @@ class GameStrategyAdvanced(GamePlayStrategy):
         '''
         self.gameStrategyAdvanced()
         
-        def gameStrategyAdvanced():
-            print ("Started Advanced Mode")          
+    def gameStrategyAdvanced(self):
+        print ("Started Advanced Mode")          
           

@@ -132,37 +132,31 @@ class CardConfigDialog():
             
 class SerialConfigDialog():
     def __init__(self, parent):
+        self.activeSerialInterface = rFIDReader.RFIDReaderClass()
         self.top = tk.Toplevel(parent)
         
         self.configSerialConnection()
-        self.initializeWidgets()
                 
     def configSerialConnection(self):
-        
-#        self.currentserial = rFIDReader.RFIDReaderClass.getSerial(self)
-        self.currentserial = "/dev/ttyACM0"
-        
+               
         self.top.wm_title("Configure Serial Connection") 
         
         self.frame1 = tk.Frame(self.top)
-        tk.Label(self.frame1, text= "Current configured Serial Connection:").pack(side="top")
-        serial = tk.Entry(self.frame1, textvariable=self.currentserial)
-        serial.pack()
+        tk.Label(self.frame1, text= "Current configured Serial Connection:")
+        self.serial = tk.Entry(self.frame1)
+        self.serial.insert(0, self.activeSerialInterface.getSerialInterface())
+        self.serial.pack()
         self.frame1.pack(expand=True, padx=50, pady=20)
         closeButton = tk.Button(self.top, text="Save", command=self.save)
         closeButton.pack(side="right", padx=5, pady=5)
         cancelButton = tk.Button(self.top, text="Cancel", command=self.cancel)
         cancelButton.pack(side="right", padx=5, pady=5)
         
-    def initializeWidgets(self):
-        defaultSerial =  "/dev/ttyACM0"
+    def updateSerialConnection(self):
+        rFIDReader.RFIDReaderClass.setSerialInterface(self,self.serial.get())
         
     def save(self):
-        #aus edit felder texte holen
-        #über self.curINdex passende card suchen
-        #card mit neuen texten aktualisieren
-        #listbox eintrag aktualisieren
-        #card manager configuration speichern
+        self.updateSerialConnection()
         
         self.top.destroy()
 
