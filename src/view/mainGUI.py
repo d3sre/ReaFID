@@ -31,7 +31,7 @@ class MainGui(tk.Frame):
         self.menubar.add_cascade(label="File", menu=menu)
 #        menu.add_command(label="Configure Cards", command=self.configCardsWindow)
         menu.add_command(label="Configure Cards", command=self.showConfigCardsDialog)
-        menu.add_command(label="Select Game Mode")
+        menu.add_command(label="Select Game Mode", command=self.showGamePlayDialog)
         menu.add_command(label="Configure Console Connection", command=self.configSerialConnection)
         
         menu = tk.Menu(self.menubar, tearoff=0)
@@ -56,9 +56,9 @@ class MainGui(tk.Frame):
         d = subGUIs.CardConfigDialog(self)
         self.wait_window(d.top)
         
-#         myConfigDialog = subGUIs.ConfigCardsDialog(self)
-#         myConfigDialog.show()
-        #myConfigGUI.configGUI(self)
+    def showGamePlayDialog(self):
+        d = subGUIs.GamePlayDialog(self)
+        self.wait_window(d.top)   
         
     def configSerialConnection(self):
         d = subGUIs.SerialConfigDialog(self)
