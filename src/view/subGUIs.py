@@ -7,6 +7,7 @@ import gameLogics
 import rFIDReader
 import cardManager
 import cardFactory
+import gamePlayModes
 
 
 class CardConfigDialog():
@@ -62,10 +63,10 @@ class CardConfigDialog():
     def initializeWidgets(self):
         self.myCardManager.loadConfiguration()
         
-        numberCards = myCardManager.getSizeCardArray()
+        numberCards = self.myCardManager.getSizeCardArray()
         cardIndex = 0
         while (cardIndex < numberCards):
-            currentCard = myCardManager.getCardByNumber(cardIndex)
+            currentCard = self.myCardManager.getCardByNumber(cardIndex)
             if (isinstance(currentCard, cardFactory.ColorCard)):
                 entry = currentCard.getID() + "   " + currentCard.getColor() + "   Color"
                 self.listboxCards.insert("end", entry)
@@ -132,8 +133,8 @@ class CardConfigDialog():
 class SerialConfigDialog():
     def __init__(self, parent):
         self.top = tk.Toplevel(parent)
-
-        self.createWidgets()
+        
+        self.configSerialConnection()
         self.initializeWidgets()
                 
     def configSerialConnection(self):
@@ -141,7 +142,6 @@ class SerialConfigDialog():
 #        self.currentserial = rFIDReader.RFIDReaderClass.getSerial(self)
         self.currentserial = "/dev/ttyACM0"
         
-        self.top = tk.Toplevel(self)
         self.top.wm_title("Configure Serial Connection") 
         
         self.frame1 = tk.Frame(self.top)
@@ -149,10 +149,60 @@ class SerialConfigDialog():
         serial = tk.Entry(self.frame1, textvariable=self.currentserial)
         serial.pack()
         self.frame1.pack(expand=True, padx=50, pady=20)
-        closeButton = tk.Button(self.top, text="Save")
+        closeButton = tk.Button(self.top, text="Save", command=self.save)
         closeButton.pack(side="right", padx=5, pady=5)
-        cancelButton = tk.Button(self.top, text="Cancel")
+        cancelButton = tk.Button(self.top, text="Cancel", command=self.cancel)
         cancelButton.pack(side="right", padx=5, pady=5)
         
-            
+    def initializeWidgets(self):
+        defaultSerial =  "/dev/ttyACM0"
+        
+    def save(self):
+        #aus edit felder texte holen
+        #über self.curINdex passende card suchen
+        #card mit neuen texten aktualisieren
+        #listbox eintrag aktualisieren
+        #card manager configuration speichern
+        
+        self.top.destroy()
+
+    def cancel(self):
+        self.top.destroy()
+        
            
+class GamePlayDialog():
+    def __init__(self, parent):
+        self.myGamePlayStrategy = gamePlayModes.GamePlayStrategy()
+        self.top = tk.Toplevel(parent)
+        
+        self.configGamePlayMode()
+                
+    def configGamePlayMode(self):             
+        self.top.wm_title("Configure Game Play Mode") 
+        
+        self.frame1 = tk.Frame(self.top)
+        tk.Label(self.frame1, text= "Active Game Play Mode").pack(side="top")        
+        self.mode = tk.IntVar()
+        self.mode.set(self.myGamePlayStrategy.getGamePlayMode())
+        tk.Radiobutton(self.frame1, text="Easy Mode", variable=self.mode, value=1, command=self.selectGameMode()).pack(anchor="w")
+        tk.Radiobutton(self.frame1, text="Advanced Mode", variable=self.mode, value=2, command=self.selectGameMode()).pack(anchor="w")        
+        self.frame1.pack(expand=True, padx=50, pady=20)
+        
+        closeButton = tk.Button(self.top, text="Save", command=self.save)
+        closeButton.pack(side="right", padx=5, pady=5)
+        cancelButton = tk.Button(self.top, text="Cancel", command=self.cancel)
+        cancelButton.pack(side="right", padx=5, pady=5)
+        
+
+    def selectGameMode(self):
+        self.myGamePlayStrategy.setGamePlayMode(self.mode.get())     
+#        print("Active Game Play Mode: ", self.myGamePlayStrategy.getGamePlayMode())
+
+    def save(self):
+        self.selectGameMode()      
+        self.top.destroy()
+
+    def cancel(self):
+        self.top.destroy()
+
+               
