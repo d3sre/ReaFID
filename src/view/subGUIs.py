@@ -91,16 +91,18 @@ class CardConfigDialog():
         selectedUid = value[:11]
         
         activeCard = self.myCardManager.getCard(selectedUid)
-        self.activeUid = selectEvent.get(activeCard.getID())
+        self.entryID.delete(0, "end")
+        self.entryID.insert(0, selectedUid)
         
         if isinstance(activeCard, cardFactory.ColorCard):
-#            self.activeType = w.get("Color")
- #           self.activeType = w.config(text="Color")
-#            self.activeDesc = w.get(activeCard.getColor())
+            self.entryType.setvar("Color", 1)
+            self.entryDesc.delete(0, "end")
+            self.entryDesc.insert(0, activeCard.getColor())
             print("Type: Color, Description: ", activeCard.getColor())
         elif isinstance(activeCard, cardFactory.StudentCard):  
-#            self.activeType = w.get("Student")
-#            self.activeDesc = w.get(activeCard.getName())
+            self.entryType.setvar("Student", 2)
+            self.entryDesc.delete(0, "end")
+            self.entryDesc.insert(0, activeCard.getName())
             print("Type: Student, Description: ", activeCard.getName())
         else : print("method for this type of card not programmed")  
         
@@ -153,7 +155,7 @@ class SerialConfigDialog():
         cancelButton.pack(side="right", padx=5, pady=5)
         
     def updateSerialConnection(self):
-        rFIDReader.RFIDReaderClass.setSerialInterface(self,self.serial.get())
+        self.activeSerialInterface.setSerialInterface(self.serial.get())
         
     def save(self):
         self.updateSerialConnection()

@@ -23,8 +23,8 @@ class MainGui(tk.Frame):
         self.gameColor = "blue"
         self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
         self.canvas.pack() 
-        self.descriptionLabel = tk.Label(self.canvas, text="Color", anchor="center",width=400, height=400, background=self.gameColor)
-        self.descriptionLabel.pack()
+#        self.descriptionLabel = tk.Label(self.canvas, text="Color", anchor="center",width=400, height=400, background=self.gameColor)
+#        self.descriptionLabel.pack()
 
    
 
