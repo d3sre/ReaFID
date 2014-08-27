@@ -11,7 +11,8 @@ import cardFactory
 
 class CardConfigDialog():
     def __init__(self, parent):
-        top = self.top = tk.Toplevel(parent)
+        self.myCardManager = cardManager.CardManager()
+        self.top = tk.Toplevel(parent)
 
         self.createWidgets()
         self.initializeWidgets()
@@ -20,7 +21,7 @@ class CardConfigDialog():
     def createWidgets(self): 
         self.top.wm_title("Card Configuration Menu")  
         
-        self.frame1 = tk.Frame(self.top, relief="raised", borderwidth=1)
+        self.frame1 = tk.Frame(self.top, borderwidth=1)
         labelTitel = tk.Label(self.frame1, text= "Configure playable Cards")
         labelTitel.pack(side="top", fill="both")
         labelID = tk.Label(self.frame1, text="ID")
@@ -31,13 +32,23 @@ class CardConfigDialog():
         labelType.pack(side="left", fill="both") 
         self.frame1.pack(fill="both", expand=1)
         
-        self.frame2 = tk.Frame(self.top, relief="raised", borderwidth=1)
+        self.frame2 = tk.Frame(self.top, borderwidth=1, width=200)
         self.listboxCards = tk.Listbox(self.top)
         self.listboxCards.bind('<<ListboxSelect>>', self.cardSelected)
-        self.listboxCards.pack()    
+        self.listboxCards.pack(fill="x")    
         self.frame2.pack(fill="both", expand=1)
-         
-        #self.pack(fill="both", expand=1)
+        
+        
+        self.frame3 = tk.Frame(self.top, borderwidth=1, width=200)
+        self.entryID = tk.Entry(self.frame3)
+        self.entryID.pack(side="left")
+#        self.entryID.bind(sequence, func, add)
+        self.entryDesc = tk.Entry(self.frame3)
+        self.entryDesc.pack(side="left")
+
+        self.entryType = tk.OptionMenu(self.frame3, "Color", "Student" )  
+        self.entryType.pack(side="left") 
+        self.frame3.pack(fill="both", expand=1)
          
         buttonNew = tk.Button(self.top, text="New", command=self.new)
         buttonNew.pack(side="left", padx=5, pady=5)
@@ -49,8 +60,7 @@ class CardConfigDialog():
         buttonCancel.pack(side="right", padx=5, pady=5)
         
     def initializeWidgets(self):
-        myCardManager = cardManager.CardManager()
-        myCardManager.loadConfiguration()
+        self.myCardManager.loadConfiguration()
         
         numberCards = myCardManager.getSizeCardArray()
         cardIndex = 0
@@ -69,16 +79,37 @@ class CardConfigDialog():
         self.listboxCards.pack() 
         
     def cardSelected(self, event):
-        w = event.widget
-        self.curIndex = int(w.curselection()[0]) 
+        selectEvent = event.widget
+        self.curIndex = int(selectEvent.curselection()[0]) 
+        
+#        displayUid = event.widget
+        
         #print self.curIndex
-        value = w.get(self.curIndex)
+        value = selectEvent.get(self.curIndex)
         print(value)
+        selectedUid = value[:11]
+        
+        activeCard = self.myCardManager.getCard(selectedUid)
+        self.activeUid = selectEvent.get(activeCard.getID())
+        
+        if isinstance(activeCard, cardFactory.ColorCard):
+#            self.activeType = w.get("Color")
+ #           self.activeType = w.config(text="Color")
+#            self.activeDesc = w.get(activeCard.getColor())
+            print("Type: Color, Description: ", activeCard.getColor())
+        elif isinstance(activeCard, cardFactory.StudentCard):  
+#            self.activeType = w.get("Student")
+#            self.activeDesc = w.get(activeCard.getName())
+            print("Type: Student, Description: ", activeCard.getName())
+        else : print("method for this type of card not programmed")  
+        
         #UID aus value auslesen
         #passende card per uid suchen
         #card element in edit felder schreiben
 
     def new(self):
+        cardFactory.CardFactory.createCard(self, self.entryType)
+        print ("New card was added to card Factory")
         self.top.destroy()
         
     def delete(self):
@@ -97,100 +128,31 @@ class CardConfigDialog():
         self.top.destroy()
 
 
-
-
-class ConfigCardsDialog(tk.Toplevel):
-    def __init__(self, parent):
-        self.ok_button = tk.Button(parent, "OK", command=self.on_ok)
-#         tk.Frame.__init__(self, parent)
-#         
-#         self.parent = parent
-#  #      self.grid()
-#         self.configGUI()
-#         
-#         parent.geometry("300x200+300+300")
-
-    def on_ok(self):
-        print("OK")
-        # send the data to the parent
-#         self.app.new_data(... data from this dialog ...)
-#         
-        
-    def configGUI(self): 
-        ###test begin
-#        self.parent = tk.Frame.__init__(self)
             
-#        self.parent.pack(expand=True, padx=300, pady=200)
-        ###test end
-        
-        self.t = tk.Toplevel(self)
-        self.t.wm_title("Configuration Menu")  
-#        self.style = tk.ttk.Style()
-#        self.style.theme_use("default")
+class SerialConfigDialog():
+    def __init__(self, parent):
+        self.top = tk.Toplevel(parent)
 
-        self.frame1 = tk.Frame(self.t, relief="raised", borderwidth=1)
-        tk.Label(self.frame1, text= "Configure playable Cards").pack(side="top", fill="both")
-        m = tk.Label(self.frame1, text="ID")
-        m.pack(side="left", fill="both")
-        m = tk.Label(self.frame1, text="Description")
-        m.pack(side="left", fill="both")
-        m = tk.Label(self.frame1, text="Type")
-        m.pack(side="left", fill="both") 
-        self.frame1.pack(fill="both", expand=1)
-        self.frame2 = tk.Frame(self.t, relief="raised", borderwidth=1)
-        
-        self.getCardList()
-        
-        self.frame2.pack(fill="both", expand=1)
-        
-        self.pack(fill="both", expand=1)
-        
-        closeButton = tk.Button(self.t, text="Load from Config")
-        closeButton.pack(side="left", padx=5, pady=5)
-        closeButton = tk.Button(self.t, text="Save")
-        closeButton.pack(side="right", padx=5, pady=5)
-        cancelButton = tk.Button(self.t, text="Cancel")
-        cancelButton.pack(side="right", padx=5, pady=5)
-
-    def getCardList(self):
-        # listbox
-        textbox = tk.Listbox(self.frame2)
-        m = tk.Label(textbox, text="TEST")
-        textbox.insert(1, m)
-        textbox.pack(fill="both")
-        
-#         m = tk.Label(self.frame2, text="ID")
-#         m.pack(side="left", fill="both")
-#         m = tk.Label(self.frame2, text="Description")
-#         m.pack(side="left", fill="both")
-#         m = tk.Label(self.frame2, text="Type")
-#         m.pack(side="left", fill="both")    
-#         
-        
+        self.createWidgets()
+        self.initializeWidgets()
+                
     def configSerialConnection(self):
         
 #        self.currentserial = rFIDReader.RFIDReaderClass.getSerial(self)
         self.currentserial = "/dev/ttyACM0"
         
-        self.t = tk.Toplevel(self)
-        self.t.wm_title("Configure Serial Connection") 
+        self.top = tk.Toplevel(self)
+        self.top.wm_title("Configure Serial Connection") 
         
-        self.frame1 = tk.Frame(self.t)
+        self.frame1 = tk.Frame(self.top)
         tk.Label(self.frame1, text= "Current configured Serial Connection:").pack(side="top")
         serial = tk.Entry(self.frame1, textvariable=self.currentserial)
         serial.pack()
         self.frame1.pack(expand=True, padx=50, pady=20)
-        closeButton = tk.Button(self.t, text="Save")
+        closeButton = tk.Button(self.top, text="Save")
         closeButton.pack(side="right", padx=5, pady=5)
-        cancelButton = tk.Button(self.t, text="Cancel")
+        cancelButton = tk.Button(self.top, text="Cancel")
         cancelButton.pack(side="right", padx=5, pady=5)
         
             
-        
-def main():
-    window = tk.Tk()
-    app = ConfigCardsGui(window)
-    app.mainloop()
-    
-    
-#main()    
+           

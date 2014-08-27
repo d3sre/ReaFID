@@ -61,7 +61,8 @@ class MainGui(tk.Frame):
         #myConfigGUI.configGUI(self)
         
     def configSerialConnection(self):
-        subGUIs.ConfigCardsGui.configSerialConnection(self)    
+        d = subGUIs.SerialConfigDialog(self)
+        self.wait_window(d.top)  
 
         
         
