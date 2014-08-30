@@ -21,6 +21,7 @@ class RFIDReaderClass(metaclass=singleton.Singleton):
 
     def readUID(self):
         print("ok")
+        uid = bytes(0)
         i = 0
         self.__uid = uid
         while(self.__uid == b''):

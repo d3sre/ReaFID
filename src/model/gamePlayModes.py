@@ -13,7 +13,7 @@ import timeMeasure
 import rFIDReader
 
 import singleton
-# Error can be ignored
+
 class GamePlayStrategy(metaclass=singleton.Singleton):
     '''
     this class holds the game logics for the GUI
@@ -24,15 +24,18 @@ class GamePlayStrategy(metaclass=singleton.Singleton):
         Constructor
         '''
         self.activeGamePlayStrategy = 1
-
-    
+        
+            
     def getGamePlayMode(self):
         print("Mode is currently: ", self.activeGamePlayStrategy) 
         return self.activeGamePlayStrategy
         
     def setGamePlayMode(self, newMode):
         self.activeGamePlayStrategy = newMode  
-        print("Mode has been set to: ", self.activeGamePlayStrategy)  
+        print("Mode has been set to: ", self.activeGamePlayStrategy)     
+
+    
+
         
         
         

@@ -1,18 +1,20 @@
 #! /usr/bin/python
 
 import sys
-sys.path.append('/home/des/git/ReaFID/src/model/')
+#sys.path.append('/home/des/git/ReaFID/src/model/')
+#sys.path.append('home/des/git/ReaFID/src/controller/')
 import tkinter as tk
 import gameLogics
 import rFIDReader
 import cardManager
 import cardFactory
 import gamePlayModes
+import controller
 
 
 class CardConfigDialog():
     def __init__(self, parent):
-        self.myCardManager = cardManager.CardManager()
+#        self.myCardManager = cardManager.CardManager()
         self.top = tk.Toplevel(parent)
 
         self.createWidgets()
@@ -61,17 +63,19 @@ class CardConfigDialog():
         buttonCancel.pack(side="right", padx=5, pady=5)
         
     def initializeWidgets(self):
-        self.myCardManager.loadConfiguration()
+#        self.myCardManager.loadConfiguration()
+        cardManager.CardManager.loadConfiguration(self)
         
-        numberCards = self.myCardManager.getSizeCardArray()
+        numberCards = cardManager.CardManager.getSizeCardArray(self)
         cardIndex = 0
         while (cardIndex < numberCards):
-            currentCard = self.myCardManager.getCardByNumber(cardIndex)
+            currentCard = cardManager.CardManager.getCardByNumber(self,cardIndex)
+#            currentIDString = currentCard.getID().decode("utf-8")
             if (isinstance(currentCard, cardFactory.ColorCard)):
-                entry = currentCard.getID() + "   " + currentCard.getColor() + "   Color"
+                entry = str(currentCard.getID()) + "   " + currentCard.getColor() + "   Color"
                 self.listboxCards.insert("end", entry)
             elif (isinstance(currentCard, cardFactory.StudentCard)):
-                entry = currentCard.getID() + "   " + currentCard.getName() + "   Student ID"
+                entry = str(currentCard.getID()) + "   " + currentCard.getName() + "   Student ID"
                 self.listboxCards.insert("end", entry)
             else:
                 print("Unknown card type")
@@ -90,7 +94,7 @@ class CardConfigDialog():
         print(value)
         selectedUid = value[:11]
         
-        activeCard = self.myCardManager.getCard(selectedUid)
+        activeCard = cardManager.CardManager.getCard(self,selectedUid)
         self.entryID.delete(0, "end")
         self.entryID.insert(0, selectedUid)
         
@@ -168,7 +172,7 @@ class SerialConfigDialog():
            
 class GamePlayDialog():
     def __init__(self, parent):
-        self.myGamePlayStrategy = gamePlayModes.GamePlayStrategy()
+        self.myGamePlayStrategy = controller.GameController()
         self.top = tk.Toplevel(parent)
         
         self.configGamePlayMode()
@@ -179,7 +183,7 @@ class GamePlayDialog():
         self.frame1 = tk.Frame(self.top)
         tk.Label(self.frame1, text= "Active Game Play Mode").pack(side="top")        
         self.mode = tk.IntVar()
-        self.mode.set(self.myGamePlayStrategy.getGamePlayMode())
+        self.mode.set(self.myGamePlayStrategy.activeGameStrategy())
         tk.Radiobutton(self.frame1, text="Easy Mode", variable=self.mode, value=1, command=self.selectGameMode()).pack(anchor="w")
         tk.Radiobutton(self.frame1, text="Advanced Mode", variable=self.mode, value=2, command=self.selectGameMode()).pack(anchor="w")        
         self.frame1.pack(expand=True, padx=50, pady=20)
@@ -191,7 +195,7 @@ class GamePlayDialog():
         
 
     def selectGameMode(self):
-        self.myGamePlayStrategy.setGamePlayMode(self.mode.get())     
+        self.myGamePlayStrategy.registerGameStrategy(self.mode.get())     
 #        print("Active Game Play Mode: ", self.myGamePlayStrategy.getGamePlayMode())
 
     def save(self):

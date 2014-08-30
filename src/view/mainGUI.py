@@ -1,16 +1,16 @@
 #! /usr/bin/python
 
 import sys
-sys.path.append('/home/des/git/ReaFID/src/model/')
+sys.path.append('git/ReaFID/src/model/')
+sys.path.append('git/ReaFID/src/controller/')
 import tkinter as tk
-import gameLogics
-import cardManager
+import controller
 import subGUIs
-
 
 class MainGui(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
+        self.setCardName()
         self.topMenuBar()     
 
         try:
@@ -18,13 +18,14 @@ class MainGui(tk.Frame):
         except AttributeError:
             self.master.tk.call(master, "config", "-menu", self.menubar)
        
+#        fontText = tk.Font("Arial", 14,"bold")
 #        self.Label(master, text="Color")  
         self.canvas = tk.Canvas(self, bg="white", width=400, height=400, bd=0, highlightthickness=0)
         self.gameColor = "blue"
-        self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
+        
         self.canvas.pack() 
-#        self.descriptionLabel = tk.Label(self.canvas, text="Color", anchor="center",width=400, height=400, background=self.gameColor)
-#        self.descriptionLabel.pack()
+        self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
+        self.canvas.create_text(200,200,text=self.cardName)
 
    
 
@@ -62,4 +63,18 @@ class MainGui(tk.Frame):
         d = subGUIs.SerialConfigDialog(self)
         self.wait_window(d.top)  
 
+    
+    def setCardColor(self, color):
+        self.gameColor = color.lower()
         
+    def setCardName(self):
+#        myCardName = controller.GameController.getCardInformation(self)
+        myCardName = "red"
+        self.cardName = myCardName
+        
+    def setTimer(self):        
+        self.timerLabel = "now"
+        
+    def refreshCanvas(self):
+        self.setCardName("Timer")    
+            
