@@ -10,6 +10,7 @@ import tkinter as tk
 import mainGUI
 import subGUIs
 import controller
+import gamePlayModes
 
 class TestGUI(unittest.TestCase):
     
@@ -28,10 +29,14 @@ class TestGUI(unittest.TestCase):
     # Run Tests
     def test_openMainGUI(self):
 #        self.myController 
+        
+        gameStrategy = gamePlayModes.GameStrategyEasy()
+        
         app = mainGUI.MainGui()
         app.pack()
         app.master.title("ReaFID")
         app.mainloop()
+        
 
 #     def test_openConfigGUI(self): 
 #         

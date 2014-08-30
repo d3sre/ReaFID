@@ -7,12 +7,7 @@ import sys
 sys.path.append('git/ReaFID/src/model/')
 sys.path.append('git/ReaFID/src/view/')
 
-import gamePlayModes
 import singleton
-import tkinter as tk
-import mainGUI
-import cardManager
-import cardFactory
 
 # Error can be ignored
 class GameController(metaclass=singleton.Singleton):
@@ -22,41 +17,65 @@ class GameController(metaclass=singleton.Singleton):
 
 
     def __init__(self):
-        '''
-        Constructor
-        '''
-        self.myGameStrategy = gamePlayModes.GamePlayStrategy()
-        self.myCardManager = cardManager.CardManager()
-        
-        
-    def registerGameStrategy(self, newMode):
-        self.myGameStrategy.setGamePlayMode(newMode)
-        
-    def activeGameStrategy(self):
-        return self.myGameStrategy.getGamePlayMode()
+        print("GameController().__init__")
+        self.gameStrategy = None
+        self.mainGui = None
+         
+#         '''
+#         Constructor
+#         '''
+#         self.myGameStrategy = gamePlayModes.GamePlayStrategy()
+#         self.myCardManager = cardManager.CardManager()
+#         
+#         
+#     def registerGameStrategy(self, newMode):
+#         self.myGameStrategy.setGamePlayMode(newMode)
+#         
+#     def activeGameStrategy(self):
+#         return self.myGameStrategy.getGamePlayMode()
             
+    def registerGameStartegy(self, gameStrategy):
+        self.gameStrategy = gameStrategy
+                
+    def registerMainGui(self, mainGui):
+        self.mainGui = mainGui
         
+    def updateCurrentCardbyColor(self, color):
+        if (self.mainGui is not None):
+            self.mainGui.setCardColor(color)
         
-    def registerGUI(self):
-        # find start params for GUI
-        print ("register GUI")
-
-        
-
-    def setVariableCanvas(self):
-        print ("variable canvas")
-        
-    def getCardInformation(self):
-        self.currentCard = self.myCardManager.getCardByNumber(self,0)
-        
-        if (isinstance(self.currentCard, cardFactory.ColorCard)):
-            self.gameColor = self.currentCard.getColor()
-            return self.gameColor
-        elif (isinstance(self.currentCard, cardFactory.StudentCard)):
-            self.gameName = self.currentCard.getName()
-            return self.gameName
+    def startGame(self):
+        print("startGame")
+        if (self.gameStrategy is not None):
+            print("Not none")
+            self.gameStrategy.play()
         else:
-            print("Unknown card type")
+            print("None")
+        
+#     def registerGUI(self):
+#         # find start params for GUI
+#         print ("register GUI")
+#         root = tk.Tk() 
+#         self.app = mainGUI.MainGui()
+#         self.app.pack()
+#         self.app.master.title("ReaFID")
+#         root.mainloop()
+#         
+# 
+#     def setVariableCanvas(self):
+#         print ("variable canvas")
+#         
+#     def initializeVariables(self, self.app):
+#         self.currentCard = self.myCardManager.getCardByNumber(self,0)
+#         
+#         if (isinstance(self.currentCard, cardFactory.ColorCard)):
+#             self.gameColor = self.currentCard.getColor()
+#             
+#         elif (isinstance(self.currentCard, cardFactory.StudentCard)):
+#             self.gameName = self.currentCard.getName()
+#             return self.gameName
+#         else:
+#             print("Unknown card type")
      
         
             

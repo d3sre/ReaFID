@@ -8,6 +8,7 @@ Created on Aug 24, 2014
 # import random
 # import cardManager
 # import cardFactory
+import controller
 import gameLogics
 import timeMeasure
 import rFIDReader
@@ -55,12 +56,20 @@ class GameStrategyEasy(GamePlayStrategy):
         self.myRFIDReaderConnection = rFIDReader.RFIDReaderClass()
         self.numberOfRounds = 10
         
-        self.gameStrategyEasy()
+        print("gameStrategyEasy register")
+        controller.GameController().registerGameStartegy(self)
         
-    def gameStrategyEasy(self):
+    def play(self):
         print ("Started Easy Mode")
+        # Nur zum Test
+        controller.GameController().updateCurrentCardbyColor("red")
+
+        
         self.activeDescription = gameLogics.GameLogic.getRandomDescription(self)
         self.activeColorParsing = self.activeDescription.islower()
+        print("Current Card: ", self.activeDescription)
+        
+        controller.GameController().updateCurrentCardbyColor(self.activeColorParsing)
         
         ### game round
         startTime = self.myTimeMeasure.startTimer()

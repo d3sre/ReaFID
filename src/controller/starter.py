@@ -11,21 +11,16 @@ sys.path.append('/home/des/git/ReaFID/src/view/')
 import tkinter as tk
 # Eclipse Error is wrong, it finds the mainGUI
 #@UnresolvedImport
-import controller
 import mainGUI
 
     
 def main():
         root = tk.Tk()  
-        myGameController = controller.GameController()
         
         app = mainGUI.MainGui()
         app.pack()
         app.master.title("ReaFID")
         root.mainloop()
-    
-    
-#    myGameController.registerGUI()
-    
+        
     
 main()    
