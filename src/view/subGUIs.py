@@ -138,19 +138,20 @@ class CardConfigDialog():
             
 class SerialConfigDialog():
     def __init__(self, parent):
-        self.activeSerialInterface = rFIDReader.RFIDReaderClass()
+#        self.activeSerialInterface = rFIDReader.RFIDReaderClass()
         self.top = tk.Toplevel(parent)
         
         self.configSerialConnection()
                 
     def configSerialConnection(self):
+        activeSerialInterface = controller.GameController().getSerialInterface()
                
         self.top.wm_title("Configure Serial Connection") 
         
         self.frame1 = tk.Frame(self.top)
         tk.Label(self.frame1, text= "Current configured Serial Connection:")
         self.serial = tk.Entry(self.frame1)
-        self.serial.insert(0, self.activeSerialInterface.getSerialInterface())
+        self.serial.insert(0, activeSerialInterface)
         self.serial.pack()
         self.frame1.pack(expand=True, padx=50, pady=20)
         closeButton = tk.Button(self.top, text="Save", command=self.save)
@@ -159,11 +160,10 @@ class SerialConfigDialog():
         cancelButton.pack(side="right", padx=5, pady=5)
         
     def updateSerialConnection(self):
-        self.activeSerialInterface.setSerialInterface(self.serial.get())
+        controller.GameController().setSerialInterface(self.serial.get())
         
     def save(self):
-        self.updateSerialConnection()
-        
+        self.updateSerialConnection()     
         self.top.destroy()
 
     def cancel(self):
@@ -172,7 +172,7 @@ class SerialConfigDialog():
            
 class GamePlayDialog():
     def __init__(self, parent):
-        self.myGamePlayStrategy = controller.GameController()
+#        self.myGameController = controller.GameController()
         self.top = tk.Toplevel(parent)
         
         self.configGamePlayMode()
@@ -183,9 +183,9 @@ class GamePlayDialog():
         self.frame1 = tk.Frame(self.top)
         tk.Label(self.frame1, text= "Active Game Play Mode").pack(side="top")        
         self.mode = tk.IntVar()
-        self.mode.set(self.myGamePlayStrategy.activeGameStrategy())
-        tk.Radiobutton(self.frame1, text="Easy Mode", variable=self.mode, value=1, command=self.selectGameMode()).pack(anchor="w")
-        tk.Radiobutton(self.frame1, text="Advanced Mode", variable=self.mode, value=2, command=self.selectGameMode()).pack(anchor="w")        
+        self.mode.set(controller.GameController().getCurrentGameStrategy())
+        tk.Radiobutton(self.frame1, text="Easy Mode", variable=self.mode, value=0, command=self.selectGameMode()).pack(anchor="w")
+        tk.Radiobutton(self.frame1, text="Advanced Mode", variable=self.mode, value=1, command=self.selectGameMode()).pack(anchor="w")        
         self.frame1.pack(expand=True, padx=50, pady=20)
         
         closeButton = tk.Button(self.top, text="Save", command=self.save)
@@ -195,7 +195,7 @@ class GamePlayDialog():
         
 
     def selectGameMode(self):
-        self.myGamePlayStrategy.registerGameStrategy(self.mode.get())     
+        controller.GameController().setCurrentGameStrategy(self.mode.get())     
 #        print("Active Game Play Mode: ", self.myGamePlayStrategy.getGamePlayMode())
 
     def save(self):

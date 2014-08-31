@@ -11,6 +11,8 @@ import mainGUI
 import subGUIs
 import controller
 import gamePlayModes
+import cardManager
+import rFIDReader
 
 class TestGUI(unittest.TestCase):
     
@@ -19,10 +21,10 @@ class TestGUI(unittest.TestCase):
         self.root = tk.Tk() 
         self.myController = controller.GameController()
         
-    def tearDown(self):
-        if (self.root) :
-            self.root.destroy()
-        else : print("test ended")    
+#     def tearDown(self):
+#         if (self.root) :
+#             self.root.destroy()
+#         else : print("test ended")    
             
 
     
@@ -30,7 +32,10 @@ class TestGUI(unittest.TestCase):
     def test_openMainGUI(self):
 #        self.myController 
         
-        gameStrategy = gamePlayModes.GameStrategyEasy()
+        rFIDReader.RFIDReaderClass()
+        gamePlayModes.GamePlayManager().setGamePlayMode(0)
+        myCardManager = cardManager.CardManager()
+        myCardManager.loadConfiguration()
         
         app = mainGUI.MainGui()
         app.pack()

@@ -12,6 +12,7 @@ class MainGui(tk.Frame):
         tk.Frame.__init__(self, master)
         self.topMenuBar()     
         self.cardName = "Let's play a game"
+        self.gameColor = "white"
         try:
             self.master.config(menu=self.menubar)
         except AttributeError:
@@ -23,7 +24,6 @@ class MainGui(tk.Frame):
  
          
         self.canvas = tk.Canvas(self.frameCanvas, bg="white", width=400, height=400, bd=0, highlightthickness=0)
-        self.gameColor = "blue"
          
         self.canvas.pack() 
         self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
@@ -62,7 +62,8 @@ class MainGui(tk.Frame):
         #self.menubar.add_cascade(label="Game", menu=menuGame)
         self.menubar.add_command(label="Play", command=self.play)
         
-              
+  
+    ### GUI commands
         
     def showConfigCardsDialog(self):
         d = subGUIs.CardConfigDialog(self)
@@ -76,14 +77,18 @@ class MainGui(tk.Frame):
         d = subGUIs.SerialConfigDialog(self)
         self.wait_window(d.top)  
 
+    def play(self):
+        controller.GameController().startGame() 
+        
+    ### Game controls    
     
     def setCardColor(self, color):
         self.gameColor = color.lower()
         self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
         
-    def setCardName(self, cardName):
-#       
+    def setCardName(self, cardName):       
         self.cardName = cardName
+        self.canvas.create_text(200,200,text=self.cardName)
         
     def setTimer(self):        
         self.timerLabel = "now"
@@ -91,6 +96,5 @@ class MainGui(tk.Frame):
     def refreshCanvas(self):
         self.setCardName("Timer")
         
-    def play(self):
-        controller.GameController().startGame()    
+   
             

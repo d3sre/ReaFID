@@ -6,6 +6,8 @@ Created on Aug 24, 2014
 import sys
 sys.path.append('git/ReaFID/src/model/')
 sys.path.append('git/ReaFID/src/view/')
+import gamePlayModes
+import rFIDReader
 
 import singleton
 
@@ -20,6 +22,8 @@ class GameController(metaclass=singleton.Singleton):
         print("GameController().__init__")
         self.gameStrategy = None
         self.mainGui = None
+        self.gamePlayMode = None
+        self.serial = None
          
 #         '''
 #         Constructor
@@ -34,11 +38,26 @@ class GameController(metaclass=singleton.Singleton):
 #     def activeGameStrategy(self):
 #         return self.myGameStrategy.getGamePlayMode()
             
-    def registerGameStartegy(self, gameStrategy):
+    def registerGameStrategy(self, gameStrategy):
         self.gameStrategy = gameStrategy
-                
+
     def registerMainGui(self, mainGui):
         self.mainGui = mainGui
+        
+    def registerSerial(self, serial):
+        self.serial = serial     
+        
+    def setSerialInterface(self, serial):
+        rFIDReader.RFIDReaderClass().setSerialInterface(serial)      
+    
+    def getSerialInterface(self):
+        rFIDReader.RFIDReaderClass().getSerialInterface()    
+
+    def setCurrentGameStrategy(self, gameStrategy):
+        gamePlayModes.GamePlayManager().setGamePlayMode(gameStrategy)
+
+    def getCurrentGameStrategy(self):
+        return gamePlayModes.GamePlayManager().getGamePlayMode()
         
     def updateCurrentCardbyColor(self, color):
         if (self.mainGui is not None):

@@ -15,7 +15,35 @@ import rFIDReader
 
 import singleton
 
-class GamePlayStrategy(metaclass=singleton.Singleton):
+
+class GamePlayManager(metaclass=singleton.Singleton):
+    
+    def __init__(self):
+        '''
+        Constructor
+        '''
+        self.activeGamePlayStrategy = 0
+        print("gamePlayStrategy init")
+        self.gameStrategies = []
+        self.gameStrategies.append(GameStrategyEasy())
+        self.gameStrategies.append(GameStrategyAdvanced())
+        #self.gameStrategyEasy = GameStrategyEasy()
+        #self.gameStrategyAdvanced = GameStrategyAdvanced()
+           
+           
+            
+    def getGamePlayMode(self):
+        print("Mode is currently: ", self.activeGamePlayStrategy) 
+        return self.activeGamePlayStrategy
+        
+    def setGamePlayMode(self, newMode):
+        self.activeGamePlayStrategy = newMode
+        controller.GameController().registerGameStrategy(self.gameStrategies[self.activeGamePlayStrategy])
+          
+        print("Mode has been set to: ", self.activeGamePlayStrategy) 
+
+
+class GamePlayStrategy(object):
     '''
     this class holds the game logics for the GUI
     '''
@@ -23,19 +51,13 @@ class GamePlayStrategy(metaclass=singleton.Singleton):
     def __init__(self):
         '''
         Constructor
-        '''
-        self.activeGamePlayStrategy = 1
-        
+        '''           
+           
             
-    def getGamePlayMode(self):
-        print("Mode is currently: ", self.activeGamePlayStrategy) 
-        return self.activeGamePlayStrategy
-        
-    def setGamePlayMode(self, newMode):
-        self.activeGamePlayStrategy = newMode  
-        print("Mode has been set to: ", self.activeGamePlayStrategy)     
+    def play(self):
+        # explicitly set it up so this can't be called directly
+        raise NotImplementedError('Exception raised, GameStrategy is supposed to be an interface / abstract class!')
 
-    
 
         
         
@@ -57,7 +79,7 @@ class GameStrategyEasy(GamePlayStrategy):
         self.numberOfRounds = 10
         
         print("gameStrategyEasy register")
-        controller.GameController().registerGameStartegy(self)
+        controller.GameController().registerGameStrategy(self)
         
     def play(self):
         print ("Started Easy Mode")
@@ -91,8 +113,8 @@ class GameStrategyAdvanced(GamePlayStrategy):
         '''
         Constructor
         '''
-        self.gameStrategyAdvanced()
+        print("gameStrategyAdvanced register")
+        controller.GameController().registerGameStrategy(self)    
         
-    def gameStrategyAdvanced(self):
+    def play(self):
         print ("Started Advanced Mode")          
-          
