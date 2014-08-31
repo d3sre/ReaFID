@@ -112,7 +112,8 @@ class GameStrategyEasy(GamePlayStrategy):
         self.activeColorParsing = self.activeDescription.islower()
         print("Current Card: ", self.activeDescription)
 #        print("ActiveColorParsing: ", self.activeColorParsing)
-            
+        
+        rFIDReader.RFIDReaderClass().flushSerialInput()    
         controller.GameController().updateCurrentCardbyColor(self.activeDescription)    
                 
     def readSignal(self):

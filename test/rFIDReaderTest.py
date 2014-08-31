@@ -21,9 +21,11 @@ class TestCardCreation(unittest.TestCase):
     def test_readRFIDTag(self):               
         time.sleep(2)
         print("start")
-        receivedUid = self.myRfidReader.readUID()
-        print("received UID is: " , receivedUid)
-        print("type: " ,type(receivedUid))
+        while (True):
+            receivedUid = self.myRfidReader.readUID()
+            print("received UID is: " , receivedUid)
+        
+#        print("type: " ,type(receivedUid))
         
 #        self.assertEqual(type(receivedUid), "<class 'bytes'>")
         assert isinstance(receivedUid, bytes)
