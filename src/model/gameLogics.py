@@ -36,12 +36,12 @@ class GameLogic(object):
         
         card = cardManager.CardManager().getCardByNumber(randomNumber)
         checkType = type(cardManager.CardManager().getCardByNumber(randomNumber))
-        print ("typ: " ,checkType)
+#        print ("typ: " ,checkType)
         if (isinstance(card, cardFactory.ColorCard)):
-            print("getRandomDescription: Color true")
+#            print("getRandomDescription: Color true")
             receivedCard = card.getColor()           
         else :
-            print("getRandomDescription: Color false")
+#            print("getRandomDescription: Color false")
             receivedCard = card.getName()    
         return receivedCard
      

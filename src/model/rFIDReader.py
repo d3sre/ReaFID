@@ -23,6 +23,9 @@ class RFIDReaderClass(metaclass=singleton.Singleton):
 
 
     def readUID(self):
+        if (self.checkSerialLineOpen() == False):  
+            print("serial line had to be opened")
+            self.__srl.open()
         print("ok")
         uid = bytes(0)
         i = 0
@@ -37,9 +40,16 @@ class RFIDReaderClass(metaclass=singleton.Singleton):
             if (pointer != -1):
 #                print("pointer: ", pointer)
                 self.__uid = srlin.split(b'***')[1]
-#                print(self.__uid.strip()) 
-        self.__srl.close()
+#                print(self.__uid.strip())  
+        self.__srl.close()   
         return self.__uid.strip()
+    
+    def stopReading(self):    
+        self.__srl.close()
+        
+    def checkSerialLineOpen(self):
+        return self.__srl.isOpen()    
+        
     
 
         

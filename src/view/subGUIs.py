@@ -96,7 +96,7 @@ class CardConfigDialog():
         print(value)
         self.selectedUid = value[:11]
         
-        activeCard = self.myCardManager.getCard(self.selectedUid)
+        activeCard = self.myCardManager.getCardByID(self.selectedUid)
         self.entryID.delete(0, "end")
         self.entryID.insert(0, self.selectedUid)
         

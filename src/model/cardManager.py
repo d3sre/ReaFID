@@ -32,11 +32,12 @@ class CardManager(metaclass=singleton.Singleton):
                 else : print("Unknown card type")
         else : print("No cards found")
   
-    def getCard(self, uid):
+    def getCardByID(self, uid):
         for card in self.activeCards:
             if card.getID() == uid:
                 print("Found card: ", card.getID())
                 return card
+
             
     def getCardByNumber(self, number):
         return self.activeCards[number]

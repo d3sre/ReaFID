@@ -85,7 +85,6 @@ class MainGui(tk.Frame):
     def setCardColor(self, color):
         self.canvas.delete("all")
         self.gameColor = color
-        print("Color arrived in mainGUI")
         self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
         self.canvas.update_idletasks()
         

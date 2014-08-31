@@ -59,7 +59,7 @@ class TestManagerCreation(unittest.TestCase):
 
     def test_getCard(self):
         self.myCardManager = cardManager.CardManager()
-        self.foundCard = self.myCardManager.getCard("AD B8 57 94")
+        self.foundCard = self.myCardManager.getCardByID("AD B8 57 94")
         self.assertTrue(type(self.foundCard))
 #        print("testCard: ", type(self.foundCard))
 

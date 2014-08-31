@@ -13,7 +13,6 @@ import gameLogics
 import timeMeasure
 import rFIDReader
 import time
-
 import singleton
 
 
@@ -77,6 +76,7 @@ class GameStrategyEasy(GamePlayStrategy):
         '''
         self.myTimeMeasure = timeMeasure.timeMeasureClass()
         self.myRFIDReaderConnection = rFIDReader.RFIDReaderClass()
+        self.myCardManager = controller.GameController().getCardManager()
         self.numberOfRounds = 10
         
         print("gameStrategyEasy register")
@@ -86,32 +86,46 @@ class GameStrategyEasy(GamePlayStrategy):
         print ("Started Easy Mode")
         # Nur zum Test
         #controller.GameController().updateCurrentCardbyColor("red")
-        
         activeRound = 0
         while (activeRound < self.numberOfRounds):
+            print("-------------next round")
             self.showNeededCard()
-            
+            self.readSignal()
             ### game round
             #startTime = self.myTimeMeasure.startTimer()
             #print("Start Counter at ", startTime)
             #readUid = self.myRFIDReaderConnection.readUID()
             #print("Read UID is ", str(readUid()) )
-            #endTime = self.myTimeMeasure.getTime()
-            #print("End Counter at ", endTime)
+            timeNeeded = self.myTimeMeasure.getTime()
+            print("Time needed was: ", timeNeeded)
+            print("total time in gamePlayModes: ", self.myTimeMeasure.totalTime())
+
             ###
             time.sleep(2)
             activeRound +=1
-            
+        self.myRFIDReaderConnection.stopReading()
+        print("end time in gamePlayModes: ", self.myTimeMeasure.totalTime())
+        print("stopped reading rfid signal")   
             
     def showNeededCard(self):
         self.activeDescription = gameLogics.GameLogic.getRandomDescription(self)
         self.activeColorParsing = self.activeDescription.islower()
         print("Current Card: ", self.activeDescription)
-        print("ActiveColorParsing: ", self.activeColorParsing)
+#        print("ActiveColorParsing: ", self.activeColorParsing)
             
         controller.GameController().updateCurrentCardbyColor(self.activeDescription)    
                 
-            
+    def readSignal(self):
+        startTime = self.myTimeMeasure.startTimer()
+        print("Start Counter at ", startTime)  
+        readUid = self.myRFIDReaderConnection.readUID()  
+         
+        stringUid = readUid.decode(encoding='UTF-8')
+        print("read UID: ", readUid)
+        print("string UID: ", stringUid)
+        readCard = self.myCardManager.getCardByID(stringUid)
+        readDescription = readCard.getColor()
+        print("read Description: ", readDescription )
             
             
 class GameStrategyAdvanced(GamePlayStrategy):
