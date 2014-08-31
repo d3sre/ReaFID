@@ -83,12 +83,16 @@ class MainGui(tk.Frame):
     ### Game controls    
     
     def setCardColor(self, color):
-        self.gameColor = color.lower()
+        self.canvas.delete("all")
+        self.gameColor = color
+        print("Color arrived in mainGUI")
         self.canvas.create_rectangle(25,25,375,375, fill=self.gameColor)
+        self.canvas.update_idletasks()
         
     def setCardName(self, cardName):       
         self.cardName = cardName
         self.canvas.create_text(200,200,text=self.cardName)
+        self.canvas.update_idletasks()
         
     def setTimer(self):        
         self.timerLabel = "now"

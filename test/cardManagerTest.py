@@ -17,10 +17,10 @@ class TestManagerCreation(unittest.TestCase):
         self.myCardFactory = cardFactory.CardFactory()   
         self.card1 = self.myCardFactory.createCard("Color")
         self.card2 = self.myCardFactory.createCard("Color")
-        self.card3 = self.myCardFactory.createCard("Student")
-        self.card1.setColor("Card1")
-        self.card2.setColor("Card2")
-        self.card3.setName("Card3")
+        self.card3 = self.myCardFactory.createCard("Color")
+        self.card1.setColor("Red")
+        self.card2.setColor("Blue")
+        self.card3.setColor("Green")
         self.card1.setID("AD B8 57 94")
         self.card2.setID("B2 FB 30 E9")
         self.card3.setID("8D F4 61 94")
@@ -54,7 +54,7 @@ class TestManagerCreation(unittest.TestCase):
         self.myCardManager = cardManager.CardManager()
         self.myCardManager.loadConfiguration()
         self.myCardManager.outputCards()
-
+ 
         self.assertEqual(self.myCardManager.getSizeCardArray(), 3)
 
     def test_getCard(self):

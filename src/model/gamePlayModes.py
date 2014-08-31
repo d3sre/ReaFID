@@ -12,6 +12,7 @@ import controller
 import gameLogics
 import timeMeasure
 import rFIDReader
+import time
 
 import singleton
 
@@ -84,23 +85,32 @@ class GameStrategyEasy(GamePlayStrategy):
     def play(self):
         print ("Started Easy Mode")
         # Nur zum Test
-        controller.GameController().updateCurrentCardbyColor("red")
-
+        #controller.GameController().updateCurrentCardbyColor("red")
         
+        activeRound = 0
+        while (activeRound < self.numberOfRounds):
+            self.showNeededCard()
+            
+            ### game round
+            #startTime = self.myTimeMeasure.startTimer()
+            #print("Start Counter at ", startTime)
+            #readUid = self.myRFIDReaderConnection.readUID()
+            #print("Read UID is ", str(readUid()) )
+            #endTime = self.myTimeMeasure.getTime()
+            #print("End Counter at ", endTime)
+            ###
+            time.sleep(2)
+            activeRound +=1
+            
+            
+    def showNeededCard(self):
         self.activeDescription = gameLogics.GameLogic.getRandomDescription(self)
         self.activeColorParsing = self.activeDescription.islower()
         print("Current Card: ", self.activeDescription)
-        
-        controller.GameController().updateCurrentCardbyColor(self.activeColorParsing)
-        
-        ### game round
-        startTime = self.myTimeMeasure.startTimer()
-        print("Start Counter at ", startTime)
-        readUid = self.myRFIDReaderConnection.readUID()
-        print("Read UID is ", readUid() )
-        endTime = self.myTimeMeasure.getTime()
-        print("End Counter at ", endTime)
-        ###
+        print("ActiveColorParsing: ", self.activeColorParsing)
+            
+        controller.GameController().updateCurrentCardbyColor(self.activeDescription)    
+                
             
             
             

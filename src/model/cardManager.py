@@ -47,11 +47,11 @@ class CardManager(metaclass=singleton.Singleton):
         
         
     def saveConfiguration(self):
-        with open('data.pickle', 'wb') as f:
+        with open('cardPickle.pickle', 'wb') as f:
             pickle.dump(self.activeCards, f, pickle.HIGHEST_PROTOCOL)
 
     def loadConfiguration(self):
-        with open('data.pickle', 'rb') as f:
+        with open('cardPickle.pickle', 'rb') as f:
             self.activeCards = pickle.load(f)
 
     def getSizeCardArray(self):

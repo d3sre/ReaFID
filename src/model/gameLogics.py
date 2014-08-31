@@ -31,14 +31,18 @@ class GameLogic(object):
         else : print("Card Manager is still empty")
     
     def getRandomDescription(self):
-        randomColor = (GameLogic.getRandomNumber(self) -1)
-        print ("random Color Number" , randomColor)
-        checkType = type(cardManager.CardManager().getCardByNumber(randomColor))
+        randomNumber = (GameLogic.getRandomNumber(self) -1)
+        print ("random Color Number" , randomNumber)
+        
+        card = cardManager.CardManager().getCardByNumber(randomNumber)
+        checkType = type(cardManager.CardManager().getCardByNumber(randomNumber))
         print ("typ: " ,checkType)
-        if (isinstance(cardManager.CardManager().getCard(randomColor), cardFactory.ColorCard)):
-            receivedCard = cardManager.CardManager().getCard(randomColor).getColor()           
+        if (isinstance(card, cardFactory.ColorCard)):
+            print("getRandomDescription: Color true")
+            receivedCard = card.getColor()           
         else :
-            receivedCard = cardManager.CardManager().getCard(randomColor).getName()    
+            print("getRandomDescription: Color false")
+            receivedCard = card.getName()    
         return receivedCard
      
         

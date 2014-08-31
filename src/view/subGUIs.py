@@ -64,12 +64,14 @@ class CardConfigDialog():
         
     def initializeWidgets(self):
 #        self.myCardManager.loadConfiguration()
-        cardManager.CardManager.loadConfiguration(self)
+#        cardManager.CardManager.loadConfiguration(self)
         
-        numberCards = cardManager.CardManager.getSizeCardArray(self)
+        #numberCards = cardManager.CardManager.getSizeCardArray(self)
+        self.myCardManager = controller.GameController().getCardManager()
+        numberCards = self.myCardManager.getSizeCardArray()
         cardIndex = 0
         while (cardIndex < numberCards):
-            currentCard = cardManager.CardManager.getCardByNumber(self,cardIndex)
+            currentCard = self.myCardManager.getCardByNumber(cardIndex)
 #            currentIDString = currentCard.getID().decode("utf-8")
             if (isinstance(currentCard, cardFactory.ColorCard)):
                 entry = str(currentCard.getID()) + "   " + currentCard.getColor() + "   Color"
@@ -92,11 +94,11 @@ class CardConfigDialog():
         #print self.curIndex
         value = selectEvent.get(self.curIndex)
         print(value)
-        selectedUid = value[:11]
+        self.selectedUid = value[:11]
         
-        activeCard = cardManager.CardManager.getCard(self,selectedUid)
+        activeCard = self.myCardManager.getCard(self.selectedUid)
         self.entryID.delete(0, "end")
-        self.entryID.insert(0, selectedUid)
+        self.entryID.insert(0, self.selectedUid)
         
         if isinstance(activeCard, cardFactory.ColorCard):
             self.entryType.setvar("Color", 1)
@@ -117,10 +119,11 @@ class CardConfigDialog():
     def new(self):
         cardFactory.CardFactory.createCard(self, self.entryType)
         print ("New card was added to card Factory")
-        self.top.destroy()
+#        self.top.destroy()
         
     def delete(self):
-        self.top.destroy()
+        self.myCardManager.removeCard(self.selectedUid)
+#        self.top.destroy()
 
     def save(self):
         #aus edit felder texte holen
@@ -138,20 +141,21 @@ class CardConfigDialog():
             
 class SerialConfigDialog():
     def __init__(self, parent):
-#        self.activeSerialInterface = rFIDReader.RFIDReaderClass()
+        #self.activeSerialInterface = rFIDReader.RFIDReaderClass()
+ #       self.activeSerialInterface = controller.GameController()
         self.top = tk.Toplevel(parent)
         
         self.configSerialConnection()
                 
     def configSerialConnection(self):
-        activeSerialInterface = controller.GameController().getSerialInterface()
+
                
         self.top.wm_title("Configure Serial Connection") 
         
         self.frame1 = tk.Frame(self.top)
         tk.Label(self.frame1, text= "Current configured Serial Connection:")
         self.serial = tk.Entry(self.frame1)
-        self.serial.insert(0, activeSerialInterface)
+        self.serial.insert(0, controller.GameController().getSerialInterface())
         self.serial.pack()
         self.frame1.pack(expand=True, padx=50, pady=20)
         closeButton = tk.Button(self.top, text="Save", command=self.save)

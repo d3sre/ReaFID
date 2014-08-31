@@ -8,6 +8,7 @@ sys.path.append('git/ReaFID/src/model/')
 sys.path.append('git/ReaFID/src/view/')
 import gamePlayModes
 import rFIDReader
+import cardManager
 
 import singleton
 
@@ -24,6 +25,8 @@ class GameController(metaclass=singleton.Singleton):
         self.mainGui = None
         self.gamePlayMode = None
         self.serial = None
+        self.cardManager = None
+
          
 #         '''
 #         Constructor
@@ -37,7 +40,9 @@ class GameController(metaclass=singleton.Singleton):
 #         
 #     def activeGameStrategy(self):
 #         return self.myGameStrategy.getGamePlayMode()
-            
+ 
+ 
+    ### Register Variables        
     def registerGameStrategy(self, gameStrategy):
         self.gameStrategy = gameStrategy
 
@@ -45,24 +50,35 @@ class GameController(metaclass=singleton.Singleton):
         self.mainGui = mainGui
         
     def registerSerial(self, serial):
-        self.serial = serial     
+        self.serial = serial   
         
+    def registerCardManager(self, cardManager):
+        self.cardManager = cardManager    
+    
+    ### get and set configuration (connection between model and view)    
     def setSerialInterface(self, serial):
         rFIDReader.RFIDReaderClass().setSerialInterface(serial)      
     
     def getSerialInterface(self):
-        rFIDReader.RFIDReaderClass().getSerialInterface()    
+        return rFIDReader.RFIDReaderClass().getSerialInterface()    
 
     def setCurrentGameStrategy(self, gameStrategy):
         gamePlayModes.GamePlayManager().setGamePlayMode(gameStrategy)
 
     def getCurrentGameStrategy(self):
         return gamePlayModes.GamePlayManager().getGamePlayMode()
-        
+    
+    def getCardManager(self):
+        return cardManager.CardManager()
+    
+    ### update view /game features    
     def updateCurrentCardbyColor(self, color):
         if (self.mainGui is not None):
-            self.mainGui.setCardColor(color)
+            self.mainGui.setCardColor(color.lower())
+            self.mainGui.setCardName(color)
         
+    
+    
     def startGame(self):
         print("startGame")
         if (self.gameStrategy is not None):
@@ -70,15 +86,9 @@ class GameController(metaclass=singleton.Singleton):
             self.gameStrategy.play()
         else:
             print("None")
-        
-#     def registerGUI(self):
-#         # find start params for GUI
-#         print ("register GUI")
-#         root = tk.Tk() 
-#         self.app = mainGUI.MainGui()
-#         self.app.pack()
-#         self.app.master.title("ReaFID")
-#         root.mainloop()
+            
+            
+            
 #         
 # 
 #     def setVariableCanvas(self):
