@@ -4,9 +4,9 @@ Created on Aug 25, 2014
 
 @author: des
 '''
-import sys
+#import sys
 #sys.path.append('/home/des/git/ReaFID/src/model/')
-sys.path.append('/home/des/git/ReaFID/src/view/')
+#sys.path.append('/home/des/git/ReaFID/src/view/')
 
 import tkinter as tk
 # Eclipse Error is wrong, it finds the mainGUI
