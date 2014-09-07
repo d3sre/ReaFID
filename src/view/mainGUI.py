@@ -1,11 +1,9 @@
 #! /usr/bin/python
 
-import sys
-sys.path.append('git/ReaFID/src/model/')
-sys.path.append('git/ReaFID/src/controller/')
+
 import tkinter as tk
-import controller
-import subGUIs
+import controller.gameController as controller
+import view.subGUIs as subGUIs
 
 class MainGui(tk.Frame):
     def __init__(self, master=None):

@@ -2,17 +2,15 @@
 
 # Test code
 import unittest
-import sys
 
-sys.path.append('/home/des/git/ReaFID/src/model/')
-import rFIDReader
+import model.rFIDReader as rFIDReader
 import time
 
 class TestCardCreation(unittest.TestCase):
     
     #Create Test Object
     def setUp(self):
-        self.myRfidReader = rFIDReader.RFIDReaderClass()
+        self.myRfidReader = rFIDReader.RFIDReader()
         self.uid = bytes(0)
         
 

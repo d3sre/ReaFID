@@ -2,14 +2,14 @@
 
 import controller
 import time
-import singleton
-class RFIDReaderClass(metaclass=singleton.Singleton):
+import model.singleton as singleton
+class RFIDReader(metaclass=singleton.Singleton):
 
     def __init__(self):
         import serial
         self.__serialUid = ""
         self.serialInterface = '/dev/ttyACM0'
-        controller.GameController().registerSerial(self.serialInterface)
+        controller.gameController.GameController().registerSerial(self.serialInterface)
         self.__srl = serial.Serial(self.serialInterface, 115200, timeout=0)
         
         time.sleep(2)
@@ -21,7 +21,7 @@ class RFIDReaderClass(metaclass=singleton.Singleton):
 
     def setSerialInterface(self, serial):
         self.serialInterface = serial
-        controller.GameController().registerSerial(self.serialInterface)
+        controller.gameController.GameController().registerSerial(self.serialInterface)
         print("New Serial connection is: ", self.serialInterface )
         
     def getSerialInterface(self):

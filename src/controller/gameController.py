@@ -3,14 +3,12 @@ Created on Aug 24, 2014
 
 @author: des
 '''
-import sys
-sys.path.append('git/ReaFID/src/model/')
-sys.path.append('git/ReaFID/src/view/')
-import gamePlayModes
-import rFIDReader
-import cardManager
 
-import singleton
+import model.gamePlayModes as gamePlayModes
+import model.rFIDReader as rFIDReader
+import model.cardManager as cardManager
+
+import model.singleton as singleton
 
 # Error can be ignored
 class GameController(metaclass=singleton.Singleton):
@@ -57,10 +55,10 @@ class GameController(metaclass=singleton.Singleton):
     
     ### get and set configuration (connection between model and view)    
     def setSerialInterface(self, serial):
-        rFIDReader.RFIDReaderClass().setSerialInterface(serial)      
+        rFIDReader.RFIDReader().setSerialInterface(serial)      
     
     def getSerialInterface(self):
-        return rFIDReader.RFIDReaderClass().getSerialInterface()    
+        return rFIDReader.RFIDReader().getSerialInterface()    
 
     def setCurrentGameStrategy(self, gameStrategy):
         gamePlayModes.GamePlayManager().setGamePlayMode(gameStrategy)

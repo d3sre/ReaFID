@@ -1,9 +1,8 @@
 #! /usr/bin/python
 
-import rFIDReader
-import cardFactory
+import model.cardFactory as cardFactory
 import pickle
-import singleton
+import model.singleton as singleton
 
 
 # class Singleton(type):

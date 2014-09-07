@@ -2,12 +2,10 @@
 
 # Test code
 import unittest
-import sys
 
-sys.path.append('/home/des/git/ReaFID/src/model/')
-import cardManager
-import cardFactory
-import rFIDReader
+import model.cardManager as cardManager
+import model.cardFactory as cardFactory
+import model.rFIDReader as rFIDReader
 
 
 class TestManagerCreation(unittest.TestCase):
@@ -65,7 +63,7 @@ class TestManagerCreation(unittest.TestCase):
 
         
 #     def test_registerCards(self):
-#         rfidReader = rFIDReader.RFIDReaderClass()
+#         rfidReader = rFIDReader.RFIDReader()
 #         uid = bytes(0)
 #         receivedName = "Testname"
 #         cardTyp = "Color"

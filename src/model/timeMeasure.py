@@ -1,7 +1,7 @@
 #! /usr/bin/python
 import datetime
 
-class timeMeasureClass:   
+class TimeMeasure:   
 
     def __init__(self):      
         self.initTime = datetime.datetime.now()
@@ -25,5 +25,5 @@ class timeMeasureClass:
     def totalTime(self):
   #      counter = datetime.timedelta()
         self.totalTimeCounter = self.totalTimeCounter  + self.elapsed_time   
-        print("total Time in timeMeasureClass: ", self.totalTimeCounter)
+        print("total Time in TimeMeasure class: ", self.totalTimeCounter)
         return self.totalTimeCounter

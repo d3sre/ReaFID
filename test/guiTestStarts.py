@@ -2,23 +2,29 @@
 
 # Test code
 import unittest
-import sys
 
-sys.path.append('/home/des/git/ReaFID/src/view/')
-sys.path.append('git/ReaFID/src/controller')
+# import view
+# import controller
+# import model
+
+# import sys
+# 
+# sys.path.append('/home/des/git/ReaFID/src/view/')
+# sys.path.append('git/ReaFID/src/controller')
 import tkinter as tk
-import mainGUI
-import subGUIs
-import controller
-import gamePlayModes
-import cardManager
-import rFIDReader
+import view.mainGUI as mainGUI
+import view.subGUIs as subGUI
+import controller.gameController as controller
+import model.gamePlayModes as gamePlayModes
+import model.cardManager as cardManager
+import model.rFIDReader as rFIDReader
+import model.cardFactory as cardFactory
 
 class TestGUI(unittest.TestCase):
     
     #Create Test Object
     def setUp(self):
-        self.root = tk.Tk() 
+        
         self.myController = controller.GameController()
         
 #     def tearDown(self):
@@ -32,8 +38,9 @@ class TestGUI(unittest.TestCase):
     def test_openMainGUI(self):
 #        self.myController 
         
-        rFIDReader.RFIDReaderClass()
+        rFIDReader.RFIDReader()
         gamePlayModes.GamePlayManager().setGamePlayMode(0)
+        cardFactory.CardFactory() 
         myCardManager = cardManager.CardManager()
         myCardManager.loadConfiguration()
         

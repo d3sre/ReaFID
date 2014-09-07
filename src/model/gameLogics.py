@@ -6,8 +6,8 @@ Created on Aug 24, 2014
 '''
 
 import random
-import cardManager
-import cardFactory
+import model.cardManager as cardManager
+import model.cardFactory as cardFactory
 
 class GameLogic(object):
     '''

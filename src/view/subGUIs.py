@@ -1,15 +1,9 @@
 #! /usr/bin/python
 
-import sys
-#sys.path.append('/home/des/git/ReaFID/src/model/')
-#sys.path.append('home/des/git/ReaFID/src/controller/')
+
 import tkinter as tk
-import gameLogics
-import rFIDReader
-import cardManager
-import cardFactory
-import gamePlayModes
-import controller
+import model.cardFactory as cardFactory
+import controller.gameController as controller
 
 
 class CardConfigDialog():
@@ -141,7 +135,7 @@ class CardConfigDialog():
             
 class SerialConfigDialog():
     def __init__(self, parent):
-        #self.activeSerialInterface = rFIDReader.RFIDReaderClass()
+        #self.activeSerialInterface = rFIDReader.RFIDReader()
  #       self.activeSerialInterface = controller.GameController()
         self.top = tk.Toplevel(parent)
         

@@ -8,12 +8,14 @@ Created on Aug 24, 2014
 # import random
 # import cardManager
 # import cardFactory
+
+
 import controller
-import gameLogics
-import timeMeasure
-import rFIDReader
+import model.gameLogics as gameLogics
+import model.timeMeasure as timeMeasure
+import model.rFIDReader as rFIDReader
 import time
-import singleton
+import model.singleton as singleton
 
 
 class GamePlayManager(metaclass=singleton.Singleton):
@@ -38,7 +40,7 @@ class GamePlayManager(metaclass=singleton.Singleton):
         
     def setGamePlayMode(self, newMode):
         self.activeGamePlayStrategy = newMode
-        controller.GameController().registerGameStrategy(self.gameStrategies[self.activeGamePlayStrategy])
+        controller.gameController.GameController().registerGameStrategy(self.gameStrategies[self.activeGamePlayStrategy])
           
         print("Mode has been set to: ", self.activeGamePlayStrategy) 
 
@@ -74,13 +76,14 @@ class GameStrategyEasy(GamePlayStrategy):
         '''
         Constructor
         '''
-        self.myTimeMeasure = timeMeasure.timeMeasureClass()
-        self.myRFIDReaderConnection = rFIDReader.RFIDReaderClass()
-        self.myCardManager = controller.GameController().getCardManager()
+        self.myTimeMeasure = timeMeasure.TimeMeasure()
+        self.myRFIDReaderConnection = rFIDReader.RFIDReader()
+        self.myCardManager = controller.gameController.GameController().getCardManager()
         self.numberOfRounds = 10
         
         print("gameStrategyEasy register")
-        controller.GameController().registerGameStrategy(self)
+
+        controller.gameController.GameController().registerGameStrategy(self)
         
     def play(self):
         print ("Started Easy Mode")
@@ -113,8 +116,8 @@ class GameStrategyEasy(GamePlayStrategy):
         print("Current Card: ", self.activeDescription)
 #        print("ActiveColorParsing: ", self.activeColorParsing)
         
-        rFIDReader.RFIDReaderClass().flushSerialInput()    
-        controller.GameController().updateCurrentCardbyColor(self.activeDescription)    
+        rFIDReader.RFIDReader().flushSerialInput()    
+        controller.gameController.GameController().updateCurrentCardbyColor(self.activeDescription)    
                 
     def readSignal(self):
         startTime = self.myTimeMeasure.startTimer()
@@ -139,7 +142,7 @@ class GameStrategyAdvanced(GamePlayStrategy):
         Constructor
         '''
         print("gameStrategyAdvanced register")
-        controller.GameController().registerGameStrategy(self)    
+        controller.gameController.GameController().registerGameStrategy(self)    
         
     def play(self):
         print ("Started Advanced Mode")          
