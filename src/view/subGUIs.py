@@ -151,7 +151,7 @@ class SerialConfigDialog():
         self.serial = tk.Entry(self.frame1)
         self.serial.insert(0, controller.GameController().getSerialInterface())
         self.serial.pack()
-        self.frame1.pack(expand=True, padx=50, pady=20)
+        self.frame1.pack(expand=True, padx=70, pady=20)
         closeButton = tk.Button(self.top, text="Save", command=self.save)
         closeButton.pack(side="right", padx=5, pady=5)
         cancelButton = tk.Button(self.top, text="Cancel", command=self.cancel)
