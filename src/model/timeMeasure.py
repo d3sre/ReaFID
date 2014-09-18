@@ -1,6 +1,11 @@
 #! /usr/bin/python
 import datetime
 
+#===============================================================================
+#  time measurement functions
+#
+#  used by the game play modes to measure times
+#===============================================================================
 class TimeMeasure:   
 
     def __init__(self):      

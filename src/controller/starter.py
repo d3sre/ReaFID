@@ -1,13 +1,4 @@
 #! /usr/bin/python
-'''
-Created on Aug 25, 2014
-
-@author: des
-'''
-#import sys
-#sys.path.append('/home/des/git/ReaFID/src/model/')
-#sys.path.append('/home/des/git/ReaFID/src/view/')
-
 
 # Eclipse Error is wrong, it finds the mainGUI
 #@UnresolvedImport
@@ -18,22 +9,28 @@ import model.cardManager as cardManager
 import model.cardFactory as cardFactory
 #import controller
 import controller.gameController as gameController
-    
+
+
+#===========================================================================
+# Main class - starter class for the game 
+#
+# initial control class 
+#===========================================================================
 def main():
 
         
         
         # Initialize all singeltons
-        gameController.GameController()
-        rFIDReader.RFIDReader()
-        cardFactory.CardFactory() 
-        cardManager.CardManager()
+        gameController.GameController()                             # initialize Game Controller
+        rFIDReader.RFIDReader()                                     # open serial interface manager
+        cardFactory.CardFactory()                                   # initialize card factory manager
+        cardManager.CardManager()                                   # initialize card manager
 
         
-        gamePlayModes.GamePlayManager().setGamePlayMode(0)
-        cardManager.CardManager().loadConfiguration()
+        gamePlayModes.GamePlayManager().setGamePlayMode(0)          # activate game play mode "simple"
+        cardManager.CardManager().loadConfiguration()               # load config from pickle to card manager
         
-        app = mainGUI.MainGui()
+        app = mainGUI.MainGui()                                     # start gui
         app.pack()
         app.master.title("ReaFID")
         app.mainloop()

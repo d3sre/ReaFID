@@ -1,6 +1,10 @@
 #! /usr/bin/python
 
+#=============================================================================== 
 # Card Factory interface for creating of card objects
+#
+# check for what type shall be created and run that specific method
+#===============================================================================
 class CardFactory:
 
     def createCard(self, type):
@@ -9,7 +13,11 @@ class CardFactory:
         assert 0, "No card type: " + type
     factory = staticmethod(createCard)
     
-# creating of the actual card object
+#===============================================================================
+# creating of the actual card object - head of factory
+#
+# class with shared methods, accessible from all factory types
+#===============================================================================
 class Card(object):
     def __init__(self):
         self.cardID = "EmptyID"
@@ -20,7 +28,11 @@ class Card(object):
     def getID(self):
         return self.cardID
     
+#===============================================================================
 # factory type of card: Color Card
+#
+# special methods only needed for color cards
+#===============================================================================
 class ColorCard(Card):
     def __init__(self):
         self.color = "EmptyColor"
@@ -31,7 +43,11 @@ class ColorCard(Card):
     def getColor(self):
         return self.color
     
-# factory type of card: Student Card  
+#==============================================================================
+# factory type of card: Student Card 
+#
+# special methods only needed for student cards
+#==============================================================================
 class StudentCard(Card):
     def __init__(self):
         self.name = "EmptyStudent"

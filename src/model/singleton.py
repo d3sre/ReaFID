@@ -1,13 +1,10 @@
 #! /usr/bin/python
 
-'''
-Created on Aug 24, 2014
-
-@author: des
-'''
-
-
-
+#===============================================================================
+# Singleton Class
+#
+# controls to always access the same instance
+#===============================================================================
 class Singleton(type):
     _instances = {}
     def __call__(cls, *args, **kwargs):

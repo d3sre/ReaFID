@@ -1,14 +1,4 @@
 #! /usr/bin/python
-'''
-Created on Aug 24, 2014
-
-@author: des
-'''
-
-# import random
-# import cardManager
-# import cardFactory
-
 
 import controller
 import model.gameLogics as gameLogics
@@ -17,7 +7,12 @@ import model.rFIDReader as rFIDReader
 import time
 import model.singleton as singleton
 
-
+#===============================================================================
+# Game Play Manager Class
+#
+# singleton to always access the same manager - controls the access to the game 
+# strategies
+#===============================================================================
 class GamePlayManager(metaclass=singleton.Singleton):
     
     def __init__(self):
@@ -40,11 +35,16 @@ class GamePlayManager(metaclass=singleton.Singleton):
         
     def setGamePlayMode(self, newMode):
         self.activeGamePlayStrategy = newMode
-        controller.gameController.GameController().registerGameStrategy(self.gameStrategies[self.activeGamePlayStrategy])
+        controller.gameController.GameController().registerGameStrategy(self.gameStrategies[self.activeGamePlayStrategy])       # registers new game strategy (id) in the controller
           
         print("Mode has been set to: ", self.activeGamePlayStrategy) 
 
 
+#===============================================================================
+# Game Play Strategy 
+#
+# Strategy class for game strategy, behaves like an interface
+#===============================================================================
 class GamePlayStrategy(object):
     '''
     this class holds the game logics for the GUI
@@ -60,13 +60,12 @@ class GamePlayStrategy(object):
         # explicitly set it up so this can't be called directly
         raise NotImplementedError('Exception raised, GameStrategy is supposed to be an interface / abstract class!')
 
-
-        
-        
-        
-    
-  
-  
+   
+#=============================================================================
+# Game Strategy Easy
+#
+# easy strategy with color cards only and simple mode
+#=============================================================================
 class GameStrategyEasy(GamePlayStrategy):
     '''
     this class holds the game logics for the GUI
@@ -84,7 +83,8 @@ class GameStrategyEasy(GamePlayStrategy):
         print("gameStrategyEasy register")
 
         controller.gameController.GameController().registerGameStrategy(self)
-        
+ 
+ """ play - implements strategy method """       
     def play(self):
         print ("Started Easy Mode")
         # Nur zum Test
@@ -109,29 +109,35 @@ class GameStrategyEasy(GamePlayStrategy):
         self.myRFIDReaderConnection.stopReading()
         print("end time in gamePlayModes: ", self.myTimeMeasure.totalTime())
         print("stopped reading rfid signal")   
-            
+
+""" find card for next round """            
     def showNeededCard(self):
         self.activeDescription = gameLogics.GameLogic.getRandomDescription(self)
-        self.activeColorParsing = self.activeDescription.islower()
+        self.activeColorParsing = self.activeDescription.islower()      # lower case color name is parsed correctly to color 
         print("Current Card: ", self.activeDescription)
 #        print("ActiveColorParsing: ", self.activeColorParsing)
         
-        rFIDReader.RFIDReader().flushSerialInput()    
-        controller.gameController.GameController().updateCurrentCardbyColor(self.activeDescription)    
-                
+        rFIDReader.RFIDReader().flushSerialInput()                      # clear buffer first
+        controller.gameController.GameController().updateCurrentCardbyColor(self.activeDescription)     # update displayed gard in GUI 
+
+""" read until UID is found - needed for verify showed card"""                
     def readSignal(self):
         startTime = self.myTimeMeasure.startTimer()
         print("Start Counter at ", startTime)  
         readUid = self.myRFIDReaderConnection.readUID()  
          
-        stringUid = readUid.decode(encoding='UTF-8')
+        stringUid = readUid.decode(encoding='UTF-8')                    # parse read UID to search for the card in the card manager
         print("read UID: ", readUid)
         print("string UID: ", stringUid)
         readCard = self.myCardManager.getCardByID(stringUid)
         readDescription = readCard.getColor()
         print("read Description: ", readDescription )
             
-            
+#===================================================================
+# Game Strategy Advanced 
+#
+# not implemented yet, just here to show the manager works
+#===================================================================
 class GameStrategyAdvanced(GamePlayStrategy):
     '''
     this class holds the game logics for the GUI

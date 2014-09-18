@@ -5,6 +5,11 @@ import tkinter as tk
 import controller.gameController as controller
 import view.subGUIs as subGUIs
 
+#===============================================================================
+# Main GUI
+#
+# 
+#===============================================================================
 class MainGui(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
@@ -35,7 +40,7 @@ class MainGui(tk.Frame):
         controller.GameController().registerMainGui(self)
 
    
-
+""" menu bar wih all controls """
     def topMenuBar(self):
         self.menubar = tk.Menu(self)
         menuFile = tk.Menu(self.menubar, tearoff=0)
@@ -61,7 +66,7 @@ class MainGui(tk.Frame):
         self.menubar.add_command(label="Play", command=self.play)
         
   
-    ### GUI commands
+""" GUI commands """
         
     def showConfigCardsDialog(self):
         d = subGUIs.CardConfigDialog(self)
@@ -78,7 +83,7 @@ class MainGui(tk.Frame):
     def play(self):
         controller.GameController().startGame() 
         
-    ### Game controls    
+""" Game controls """     
     
     def setCardColor(self, color):
         self.canvas.delete("all")

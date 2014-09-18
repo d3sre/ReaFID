@@ -7,10 +7,7 @@ import unittest
 # import controller
 # import model
 
-# import sys
-# 
-# sys.path.append('/home/des/git/ReaFID/src/view/')
-# sys.path.append('git/ReaFID/src/controller')
+
 import tkinter as tk
 import view.mainGUI as mainGUI
 import view.subGUIs as subGUI
@@ -20,9 +17,12 @@ import model.cardManager as cardManager
 import model.rFIDReader as rFIDReader
 import model.cardFactory as cardFactory
 
+#===============================================================================
+# GUI Tests
+#===============================================================================
 class TestGUI(unittest.TestCase):
     
-    #Create Test Object
+    """ Create Test Object """
     def setUp(self):
         
         self.myController = controller.GameController()
@@ -34,7 +34,7 @@ class TestGUI(unittest.TestCase):
             
 
     
-    # Run Tests
+    """ Run Tests """
     def test_openMainGUI(self):
 #        self.myController 
         

@@ -3,6 +3,12 @@
 import controller
 import time
 import model.singleton as singleton
+
+#===============================================================================
+#  RFID Reader Class
+#
+# all reads from the serial interface are performed here
+#===============================================================================
 class RFIDReader(metaclass=singleton.Singleton):
 
     def __init__(self):
@@ -28,19 +34,13 @@ class RFIDReader(metaclass=singleton.Singleton):
         print("Active Serial connection is: ", self.serialInterface ) 
         return self.serialInterface   
 
-
+""" main method to read only UIDs """
     def readUID(self):
-#         if (self.checkSerialLineOpen() == False):  
-#             print("serial line had to be opened")
-#             self.__srl.open()
         print("ok")
         uid = bytes(0)
         i = 0
         self.__uid = uid
 
-
-
-#TEST
         while(self.__srl.inWaiting() == 0):
             pass
 
@@ -54,53 +54,28 @@ class RFIDReader(metaclass=singleton.Singleton):
             length = len(line)
             start = length - 5
             if (start >= 0):
-                found = line.find(b' ***\n', start)   
+                found = line.find(b' ***\n', start)     # Found end when pattern '***\n' is found
 #            print("Current line: ", line, " Length: ", length, " Start: ", start, " End: ", end, " Found: ", found)
             if (found != -1):
                 endFound = True
         
-        self.__srl.flushInput()
+        self.__srl.flushInput()                         # flush Input so no noise is kept in the buffer
         
-        start = found - 11
-        self.__uid = line[start:found]
+        start = found - 11                              # find the start of the UID
+        self.__uid = line[start:found]                  # store the UID
         
         #print("Found UID: ", self.__uid) 
         return self.__uid
         
-        
-        
-#TEST
-        
-        
-        
-        
-#         while(self.__uid == b''):
-# #            print(self.__srl.readline())
-#             srlin = self.__srl.readline()
-#             self.srlInput = srlin + srlin
-# #            print(i)
-#             i = i + 1
-#             pointer = self.srlInput.find(b'***')            
-#             if (pointer != -1):
-# #                print("pointer: ", pointer)
-#                 self.__uid = srlin.split(b'***')[1]
-# #                print(self.__uid.strip())  
-# #         self.__srl.close()   
-#  
-#         self.__uid.strip()
-#          
-# #         temp = self.__srl.readline()
-# #         while(temp != b''):
-# #             temp = self.__srl.readline()
-#          
-#         return self.__uid
-    
+""" close the serial interface at the end of the reads """    
     def stopReading(self):    
         self.__srl.close()
-        
+
+""" check if line is open for display in MainGUI """        
     def checkSerialLineOpen(self):
         return self.__srl.isOpen()    
-        
+
+""" flush function to clear the buffer """        
     def flushSerialInput(self):
         self.__srl.flushInput()    
     
