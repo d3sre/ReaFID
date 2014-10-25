@@ -47,8 +47,10 @@ class CardConfigDialog():
 #        self.entryID.bind(sequence, func, add)
         self.entryDesc = tk.Entry(self.frame3)
         self.entryDesc.pack(side="left")
-
-        self.entryType = tk.OptionMenu(self.frame3, "Color", "Student")  
+        
+        self.typeVar = tk.StringVar(self.frame3)
+        self.typeVar.set("Color")
+        self.entryType = tk.OptionMenu(self.frame3, self.typeVar, "Color", "Student")  
         self.entryType.pack(side="left") 
         self.frame3.pack(fill="both", expand=1)
          
@@ -99,20 +101,20 @@ class CardConfigDialog():
         print(value)
         self.selectedUid = value[:11]
         
-        activeCard = self.myCardManager.getCardByID(self.selectedUid)
+        self.activeCard = self.myCardManager.getCardByID(self.selectedUid)
         self.entryID.delete(0, "end")
         self.entryID.insert(0, self.selectedUid)
         
-        if isinstance(activeCard, cardFactory.ColorCard):
+        if isinstance(self.activeCard, cardFactory.ColorCard):
             self.entryType.setvar("Color", "Color")
             self.entryDesc.delete(0, "end")
-            self.entryDesc.insert(0, activeCard.getColor())
-            print("Type: Color, Description: ", activeCard.getColor())
-        elif isinstance(activeCard, cardFactory.StudentCard):  
+            self.entryDesc.insert(0, self.activeCard.getColor())
+            print("Type: Color, Description: ", self.activeCard.getColor())
+        elif isinstance(self.activeCard, cardFactory.StudentCard):  
             self.entryType.setvar("Student", "Student")
             self.entryDesc.delete(0, "end")
-            self.entryDesc.insert(0, activeCard.getName())
-            print("Type: Student, Description: ", activeCard.getName())
+            self.entryDesc.insert(0, self.activeCard.getName())
+            print("Type: Student, Description: ", self.activeCard.getName())
         else : print("method for this type of card not programmed")  
         
         # UID aus value auslesen
@@ -122,7 +124,7 @@ class CardConfigDialog():
 
     def new(self):
         ''' new button to add new cards to Card Manager '''
-        cardFactory.CardFactory.createCard(self, self.entryType)
+        controller.GameController.addNewCard(self)
         print ("New card was added to card Factory")
 #        self.top.destroy()
  
@@ -135,6 +137,11 @@ class CardConfigDialog():
 
     def save(self):
         ''' save button to save configuration to Card Manager '''
+        entryIDContent = self.entryID.get()
+        entryDescContent = self.entryDesc.get()
+        entryTypeContent = self.typeVar.get()
+        
+        controller.GameController().updateCard(self.activeCard, entryIDContent, entryDescContent, entryTypeContent)
         # aus edit felder texte holen
         # über self.curINdex passende card suchen
         # card mit neuen texten aktualisieren

@@ -73,3 +73,12 @@ class CardManager(metaclass=singleton.Singleton):
     def getEmptyManager(self, list):
         ''' get empty manager - clear array '''
         return self.activeCards.clear()
+    
+    def editCard(self, card, uid, name):
+        if isinstance(card, cardFactory.ColorCard):
+            card.setID(uid)
+            card.setColor(name)
+        elif isinstance(card, cardFactory.StudentCard):
+            card.setID(uid)
+            card.setName(name)
+        else: print ("Error with card occured")

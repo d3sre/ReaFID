@@ -2,6 +2,7 @@
 import model.gamePlayModes as gamePlayModes
 import model.rFIDReader as rFIDReader
 import model.cardManager as cardManager
+import model.cardFactory as cardFactory
 
 import model.singleton as singleton
 
@@ -65,5 +66,16 @@ class GameController(metaclass=singleton.Singleton):
         else:
             print("None")
             
+    def addNewCard(self):
+        cardFactory.CardFactory.createCard(self, "Color")  
+              
+    def updateCard(self, card, id, desc, type):
+        if isinstance(card, cardFactory.ColorCard):
+            cardManager.CardManager.editCard(self, card, id, desc)
+            print("Updated Color Card")
+        elif isinstance(card, cardFactory.StudentCard):  
+            cardManager.CardManager.editCard(self, card, id, desc)
+            print("Updated Student Card")
+        else : print("method for this type of card not programmed")        
             
                  
