@@ -14,7 +14,7 @@ import gameLogics
 #===============================================================================
 class TestManagerCreation(unittest.TestCase):
     
-    """ Create Test Object """
+    ''' Create Test Object '''
     def setUp(self):
         self.myCardFactory = cardFactory.CardFactory()   
         self.card1 = self.myCardFactory.createCard("Color")
@@ -36,7 +36,7 @@ class TestManagerCreation(unittest.TestCase):
     def tearDown(self):
         cardManager.CardManager().getEmptyManager(self.myCardManager)   
     
-    """ Run Tests """
+    ''' Run Tests '''
     def test_checkRandomValue(self):        
         self.assertEqual(self.myCardManager.getSizeCardArray(), 3)
         self.size = self.myCardManager.getSizeCardArray()

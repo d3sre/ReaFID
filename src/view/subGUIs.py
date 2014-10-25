@@ -18,8 +18,9 @@ class CardConfigDialog():
         self.createWidgets()
         self.initializeWidgets()
         
-""" create graphical elements """
+
     def createWidgets(self): 
+        ''' create graphical elements '''
         self.top.wm_title("Card Configuration Menu")  
         
         self.frame1 = tk.Frame(self.top, borderwidth=1)
@@ -60,8 +61,9 @@ class CardConfigDialog():
         buttonCancel = tk.Button(self.top, text="Cancel", command=self.cancel)
         buttonCancel.pack(side="right", padx=5, pady=5)
         
-""" get cards from Card Manager to display """       
+       
     def initializeWidgets(self):
+        ''' get cards from Card Manager to display '''
 #        self.myCardManager.loadConfiguration()
 #        cardManager.CardManager.loadConfiguration(self)
         
@@ -84,8 +86,9 @@ class CardConfigDialog():
         
         self.listboxCards.pack() 
 
-""" insert selected card info into change card boxes """        
+       
     def cardSelected(self, event):
+        ''' insert selected card info into change card boxes ''' 
         selectEvent = event.widget
         self.curIndex = int(selectEvent.curselection()[0]) 
         
@@ -116,19 +119,22 @@ class CardConfigDialog():
         # passende card per uid suchen
         # card element in edit felder schreiben
 
-""" new button to add new cards to Card Manager """
+
     def new(self):
+        ''' new button to add new cards to Card Manager '''
         cardFactory.CardFactory.createCard(self, self.entryType)
         print ("New card was added to card Factory")
 #        self.top.destroy()
  
-""" delete button to delete card from Card Manager """       
+      
     def delete(self):
+        ''' delete button to delete card from Card Manager ''' 
         self.myCardManager.removeCard(self.selectedUid)
 #        self.top.destroy()
 
-""" save button to save configuration to Card Manager """
+
     def save(self):
+        ''' save button to save configuration to Card Manager '''
         # aus edit felder texte holen
         # über self.curINdex passende card suchen
         # card mit neuen texten aktualisieren
@@ -137,8 +143,9 @@ class CardConfigDialog():
         
         self.top.destroy()
 
-""" cancel button to dismiss all changes """
+
     def cancel(self):
+        ''' cancel button to dismiss all changes '''
         self.top.destroy()
 
 
@@ -150,14 +157,14 @@ class CardConfigDialog():
 class SerialConfigDialog():
     def __init__(self, parent):
         # self.activeSerialInterface = rFIDReader.RFIDReader()
- #       self.activeSerialInterface = controller.GameController()
+#       self.activeSerialInterface = controller.GameController()
         self.top = tk.Toplevel(parent)
         
         self.configSerialConnection()
 
-""" create dialog elements """                
+               
     def configSerialConnection(self):
-
+        ''' create dialog elements ''' 
                
         self.top.wm_title("Configure Serial Connection") 
         
@@ -172,17 +179,20 @@ class SerialConfigDialog():
         cancelButton = tk.Button(self.top, text="Cancel", command=self.cancel)
         cancelButton.pack(side="right", padx=5, pady=5)
 
-""" update serial configuration over controller """        
+        
     def updateSerialConnection(self):
+        ''' update serial configuration over controller '''
         controller.GameController().setSerialInterface(self.serial.get())
 
-""" save button to save changes """        
+       
     def save(self):
+        ''' save button to save changes ''' 
         self.updateSerialConnection()     
         self.top.destroy()
 
-""" cancel button to dismiss changes """
+
     def cancel(self):
+        ''' cancel button to dismiss changes '''
         self.top.destroy()
         
 #===============================================================================
@@ -197,8 +207,9 @@ class GamePlayDialog():
         
         self.configGamePlayMode()
 
-""" create dialg elements """                
-    def configGamePlayMode(self):             
+              
+    def configGamePlayMode(self):     
+        ''' create dialg elements '''          
         self.top.wm_title("Configure Game Play Mode") 
         
         self.frame1 = tk.Frame(self.top)
@@ -214,19 +225,22 @@ class GamePlayDialog():
         cancelButton = tk.Button(self.top, text="Cancel", command=self.cancel)
         cancelButton.pack(side="right", padx=5, pady=5)
         
-""" select active game mode """
+
     def selectGameMode(self):
+        ''' select active game mode '''
         controller.GameController().setCurrentGameStrategy(self.mode.get())     
 #        print("Active Game Play Mode: ", self.myGamePlayStrategy.getGamePlayMode())
 
 
-""" save button to save changes to game play modes """
+
     def save(self):
+        ''' save button to save changes to game play modes '''
         self.selectGameMode()      
         self.top.destroy()
 
-""" cancel button to dismiss changes """
+
     def cancel(self):
+        ''' cancel button to dismiss changes '''
         self.top.destroy()
 
                

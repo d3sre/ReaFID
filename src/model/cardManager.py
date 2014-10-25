@@ -17,12 +17,14 @@ class CardManager(metaclass=singleton.Singleton):
         self.activeCards = []
                  
 
-""" add card object to array """
+
     def addCard(self, card):
+        ''' add card object to array '''
         self.activeCards.append(card)
 
-""" print out all cards in manager """
+
     def outputCards(self):
+        ''' print out all cards in manager '''
         if self.activeCards:
             for card in self.activeCards:
                 if isinstance(card, cardFactory.ColorCard):                 # check what type of card object it is
@@ -32,35 +34,42 @@ class CardManager(metaclass=singleton.Singleton):
                 else : print("Unknown card type")
         else : print("No cards found")
 
-""" get card by uid """  
+  
     def getCardByID(self, uid):
+        ''' get card by uid '''
         for card in self.activeCards:
             if card.getID() == uid:
                 print("Found card: ", card.getID())
                 return card
 
-""" get card by the number it has in the array """            
+            
     def getCardByNumber(self, number):
+        ''' get card by the number it has in the array '''
         return self.activeCards[number]
              
-""" remove card from activeCards array """            
+           
     def removeCard(self, card):
+        ''' remove card from activeCards array ''' 
         self.activeCards.remove(card)
         
-""" pickle the configuration - store array """        
+       
     def saveConfiguration(self):
+        ''' pickle the configuration - store array ''' 
         with open('cardPickle.pickle', 'wb') as f:
             pickle.dump(self.activeCards, f, pickle.HIGHEST_PROTOCOL)
 
-""" load pickle configuration """
+
     def loadConfiguration(self):
+        ''' load pickle configuration '''
         with open('cardPickle.pickle', 'rb') as f:
             self.activeCards = pickle.load(f)
 
-""" get size of array - for only get right random value """
+
     def getSizeCardArray(self):
+        ''' get size of array - for only get right random value '''
         return len(self.activeCards)
     
-""" get empty manager - clear array """    
+    
     def getEmptyManager(self, list):
+        ''' get empty manager - clear array '''
         return self.activeCards.clear()

@@ -21,7 +21,7 @@ class GameController(metaclass=singleton.Singleton):
         self.serial = None
         self.cardManager = None
  
-""" Register Variables """        
+#''' Register Variables '''        
     def registerGameStrategy(self, gameStrategy):
         self.gameStrategy = gameStrategy
 
@@ -34,7 +34,7 @@ class GameController(metaclass=singleton.Singleton):
     def registerCardManager(self, cardManager):
         self.cardManager = cardManager    
     
-""" get and set configuration (connection between model and view) """
+#''' get and set configuration (connection between model and view) '''
     def setSerialInterface(self, serial):
         rFIDReader.RFIDReader().setSerialInterface(serial)      
     
@@ -50,7 +50,7 @@ class GameController(metaclass=singleton.Singleton):
     def getCardManager(self):
         return cardManager.CardManager()
     
-""" update view /game features """   
+#''' update view /game features '''   
     def updateCurrentCardbyColor(self, color):
         if (self.mainGui is not None):
             self.mainGui.setCardColor(color.lower())

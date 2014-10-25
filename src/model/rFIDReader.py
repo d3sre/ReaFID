@@ -34,8 +34,9 @@ class RFIDReader(metaclass=singleton.Singleton):
         print("Active Serial connection is: ", self.serialInterface ) 
         return self.serialInterface   
 
-""" main method to read only UIDs """
+
     def readUID(self):
+        ''' main method to read only UIDs '''
         print("ok")
         uid = bytes(0)
         i = 0
@@ -67,16 +68,19 @@ class RFIDReader(metaclass=singleton.Singleton):
         #print("Found UID: ", self.__uid) 
         return self.__uid
         
-""" close the serial interface at the end of the reads """    
+    
     def stopReading(self):    
+        ''' close the serial interface at the end of the reads '''
         self.__srl.close()
 
-""" check if line is open for display in MainGUI """        
+      
     def checkSerialLineOpen(self):
+        ''' check if line is open for display in MainGUI '''  
         return self.__srl.isOpen()    
 
-""" flush function to clear the buffer """        
+        
     def flushSerialInput(self):
+        ''' flush function to clear the buffer '''
         self.__srl.flushInput()    
     
 

@@ -84,8 +84,9 @@ class GameStrategyEasy(GamePlayStrategy):
 
         controller.gameController.GameController().registerGameStrategy(self)
  
- """ play - implements strategy method """       
+       
     def play(self):
+        ''' play - implements strategy method '''
         print ("Started Easy Mode")
         # Nur zum Test
         #controller.GameController().updateCurrentCardbyColor("red")
@@ -110,8 +111,9 @@ class GameStrategyEasy(GamePlayStrategy):
         print("end time in gamePlayModes: ", self.myTimeMeasure.totalTime())
         print("stopped reading rfid signal")   
 
-""" find card for next round """            
+            
     def showNeededCard(self):
+        ''' find card for next round '''
         self.activeDescription = gameLogics.GameLogic.getRandomDescription(self)
         self.activeColorParsing = self.activeDescription.islower()      # lower case color name is parsed correctly to color 
         print("Current Card: ", self.activeDescription)
@@ -120,8 +122,9 @@ class GameStrategyEasy(GamePlayStrategy):
         rFIDReader.RFIDReader().flushSerialInput()                      # clear buffer first
         controller.gameController.GameController().updateCurrentCardbyColor(self.activeDescription)     # update displayed gard in GUI 
 
-""" read until UID is found - needed for verify showed card"""                
+                
     def readSignal(self):
+        ''' read until UID is found - needed for verify showed card'''
         startTime = self.myTimeMeasure.startTimer()
         print("Start Counter at ", startTime)  
         readUid = self.myRFIDReaderConnection.readUID()  

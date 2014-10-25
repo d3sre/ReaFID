@@ -22,7 +22,7 @@ import model.cardFactory as cardFactory
 #===============================================================================
 class TestGUI(unittest.TestCase):
     
-    """ Create Test Object """
+    ''' Create Test Object '''
     def setUp(self):
         
         self.myController = controller.GameController()
@@ -34,7 +34,7 @@ class TestGUI(unittest.TestCase):
             
 
     
-    """ Run Tests """
+    ''' Run Tests '''
     def test_openMainGUI(self):
 #        self.myController 
         

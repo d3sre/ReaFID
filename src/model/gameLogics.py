@@ -22,8 +22,9 @@ class GameLogic(object):
         '''
         self.getRandomDescription()
 
-""" select a random number - but only  valid in the range of available cards """    
+  
     def getRandomNumber(self):
+        ''' select a random number - but only  valid in the range of available cards '''  
         cardArraySize = cardManager.CardManager().getSizeCardArray()
 #        print ("cardArraySize:", cardArraySize)
         if (cardArraySize != 0):
@@ -32,8 +33,9 @@ class GameLogic(object):
             return validRandomNumber
         else : print("Card Manager is still empty")
 
-""" get description of the matching card to update the MainGUI """    
+   
     def getRandomDescription(self):
+        ''' get description of the matching card to update the MainGUI ''' 
         randomNumber = (GameLogic.getRandomNumber(self) -1)
         print ("random Color Number" , randomNumber)
         
