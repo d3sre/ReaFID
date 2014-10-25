@@ -104,12 +104,12 @@ class CardConfigDialog():
         self.entryID.insert(0, self.selectedUid)
         
         if isinstance(activeCard, cardFactory.ColorCard):
-            self.entryType.setvar("Color", 1)
+            self.entryType.setvar("Color", "Color")
             self.entryDesc.delete(0, "end")
             self.entryDesc.insert(0, activeCard.getColor())
             print("Type: Color, Description: ", activeCard.getColor())
         elif isinstance(activeCard, cardFactory.StudentCard):  
-            self.entryType.setvar("Student", 2)
+            self.entryType.setvar("Student", "Student")
             self.entryDesc.delete(0, "end")
             self.entryDesc.insert(0, activeCard.getName())
             print("Type: Student, Description: ", activeCard.getName())
