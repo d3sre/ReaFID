@@ -41,26 +41,27 @@ class MainGui(tk.Frame):
 
    
 """ menu bar wih all controls """
+
     def topMenuBar(self):
         self.menubar = tk.Menu(self)
         menuFile = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label="File", menu=menuFile)
-#        menu.add_command(label="Configure Cards", command=self.configCardsWindow)
+    #   menu.add_command(label="Configure Cards", command=self.configCardsWindow)
         menuFile.add_command(label="Configure Cards", command=self.showConfigCardsDialog)
         menuFile.add_command(label="Select Game Mode", command=self.showGamePlayDialog)
         menuFile.add_command(label="Configure Console Connection", command=self.configSerialConnection)
-        
+            
         menuTopScore = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label="Topscore", menu=menuTopScore)
         menuTopScore.add_command(label="Show Topscore")
-        
+            
         menuAbout = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_cascade(label="About", menu=menuAbout)
-        
+            
         menuState = tk.Menu(self.menubar, tearoff=0)
         self.menubar.add_separator()
         self.menubar.add_cascade(label="State")
-        
+            
         #menuGame = tk.Menu(self.menubar, tearoff=0)
         #self.menubar.add_cascade(label="Game", menu=menuGame)
         self.menubar.add_command(label="Play", command=self.play)
