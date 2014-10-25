@@ -131,7 +131,12 @@ class CardConfigDialog():
       
     def delete(self):
         ''' delete button to delete card from Card Manager ''' 
-        self.myCardManager.removeCard(self.selectedUid)
+        card = self.activeCard
+        controller.GameController.deleteCard(self, card)
+        self.listboxCards.delete(0, "end")
+        self.initializeWidgets()
+        
+        #self.myCardManager.removeCard(self.selectedUid)
 #        self.top.destroy()
 
 

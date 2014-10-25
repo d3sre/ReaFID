@@ -71,11 +71,18 @@ class GameController(metaclass=singleton.Singleton):
               
     def updateCard(self, card, id, desc, type):
         if isinstance(card, cardFactory.ColorCard):
-            cardManager.CardManager.editCard(self, card, id, desc)
+            
+            cardManager.CardManager().editCard(card, id, desc)
             print("Updated Color Card")
         elif isinstance(card, cardFactory.StudentCard):  
-            cardManager.CardManager.editCard(self, card, id, desc)
+            cardManager.CardManager().editCard(card, id, desc)
             print("Updated Student Card")
         else : print("method for this type of card not programmed")        
+   
+            
+    def deleteCard(self, card):
+        cardManager.CardManager().removeCard(card)        
+            
+    
             
                  
